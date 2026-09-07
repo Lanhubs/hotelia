@@ -3,29 +3,35 @@ FROM oven/bun:1 AS base
 
 # Stage 1: Build Frontend
 FROM base AS frontend-builder
-WORKDIR /app/frontend
+WORKDIR /build
 
-COPY frontend/package*.json ./
-COPY frontend/bun.lock* ./
+# Copy and build frontend
+COPY frontend/package*.json frontend/bun.lock* ./frontend/
+WORKDIR /build/frontend
 RUN bun install
+
 COPY frontend/ ./
-RUN bun run build
+# Override outDir to build to dist instead of ../api/public/landing
+RUN bun run build --outDir=dist
 
 # Stage 2: Build Admin
 FROM base AS admin-builder
-WORKDIR /app/admin
+WORKDIR /build
 
-COPY admin/package*.json ./
-COPY admin/bun.lock* ./
+# Copy and build admin
+COPY admin/package*.json admin/bun.lock* ./admin/
+WORKDIR /build/admin
 RUN bun install
+
 COPY admin/ ./
-RUN bun run build
+# Override outDir to build to dist instead of ../api/public/admin
+RUN bun run build --outDir=dist
 
 # Stage 3: Build API and assemble
 FROM base AS final
 WORKDIR /app
 
-# Install dependencies
+# Install API dependencies
 COPY api/package.json api/bun.lock* ./
 RUN bun install
 
@@ -33,8 +39,8 @@ RUN bun install
 COPY api/ ./
 
 # Copy built frontends from previous stages
-COPY --from=frontend-builder /app/frontend/dist ./public/landing
-COPY --from=admin-builder /app/admin/dist ./public/admin
+COPY --from=frontend-builder /build/frontend/dist ./public/landing
+COPY --from=admin-builder /build/admin/dist ./public/admin
 
 # Expose port (Render uses PORT env var, defaults to 10000)
 EXPOSE 10000
