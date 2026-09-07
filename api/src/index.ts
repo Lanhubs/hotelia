@@ -77,7 +77,7 @@ if (import.meta.main) {
   
   init()
 
-  Bun.serve({
+  const server = Bun.serve({
     fetch: app.fetch,
     port: port,
     hostname: '0.0.0.0', // Important for Render
@@ -95,4 +95,5 @@ async function init() {
   }
 }
 
-export default app
+// Only export for testing, not for Bun to auto-serve
+export { app }
