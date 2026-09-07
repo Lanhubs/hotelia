@@ -1,0 +1,175 @@
+import { BookingRecord } from '../types/booking';
+
+export function createWalkInRecord(bookingData: any): BookingRecord {
+  return {
+    id: bookingData.id || `BK-${Math.floor(9828 + Math.random() * 100)}`,
+    folioNumber: `FOL-2026-${Math.floor(9828 + Math.random() * 100)}`,
+    channel: 'front_desk_walkin',
+    channelCategory: 'offline',
+    channelLabel: 'Front Desk Walk-In',
+    bookedAt: 'Just Now',
+    handledBy: 'Elena Rostova (Front Desk)',
+    status: 'Checked In',
+    guest: {
+      name: bookingData.guestName,
+      email: bookingData.guestEmail || 'walkin.guest@KeoExperience.luxury',
+      phone: bookingData.guestPhone || '+1 (555) 019-2831',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200&h=200',
+      vipTier: (bookingData.vipTier as any) || 'Diamond',
+      nationality: 'United States',
+      idType: 'Passport',
+      idNumber: `ID-${Math.floor(100000 + Math.random() * 900000)}`,
+      specialRequests: bookingData.specialRequests || 'Front desk walk-in keycard issued.',
+    },
+    room: {
+      id: bookingData.roomId || 'chapparal-lodge',
+      name: bookingData.roomName || 'Chapparal Lodge Cabin',
+      category: 'Cabin & Lodge',
+      roomNumber: bookingData.roomNumber || '104',
+      floor: 1,
+      heroImage: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=85&w=1600&h=900',
+      tagline: 'Panoramic Horizon Suite with Custom Velvet Lounge & Warm Amber Lighting',
+    },
+    stay: {
+      checkInDate: '2026-08-18',
+      checkInTime: '14:00',
+      checkOutDate: '2026-08-20',
+      checkOutTime: '11:00',
+      nights: bookingData.nights || 2,
+      adults: bookingData.guests || 2,
+      children: 0,
+    },
+    financials: {
+      ratePerNight: 79,
+      roomTotal: 158,
+      taxAmount: 18.96,
+      serviceFee: 15.0,
+      addonsTotal: 0,
+      discountAmount: 0,
+      totalAmount: 191.96,
+      amountPaid: 191.96,
+      balanceDue: 0,
+      currency: 'USD',
+      paymentStatus: 'Paid',
+      paymentMethod: 'POS Terminal (Front Desk)',
+      transactionRef: `POS-${Date.now()}`,
+    },
+    keycard: {
+      status: 'Active',
+      cardUid: `RFID-K${bookingData.roomNumber || '104'}-${Math.floor(1000 + Math.random() * 9000)}`,
+      issuedAt: 'Today Just Now',
+      issuedBy: 'Elena Rostova',
+    },
+    addons: [],
+    notes: [
+      {
+        id: `note-${Date.now()}`,
+        author: 'Elena Rostova',
+        role: 'Front Desk Lead',
+        text: `Direct walk-in check-in completed at reception. Folio created.`,
+        timestamp: 'Just Now',
+      },
+    ],
+  };
+}
+
+export function createWalkInFolioRecord(data: any): { record: BookingRecord; confirmed: any } {
+  const bookingId = `BK-${Math.floor(9828 + Math.random() * 100)}`;
+  const folioCode = `FOL-2026-${Math.floor(100000 + Math.random() * 900000)}`;
+
+  const record: BookingRecord = {
+    id: bookingId,
+    folioNumber: folioCode,
+    channel: 'front_desk_walkin',
+    channelCategory: 'offline',
+    channelLabel: 'Front Desk Walk-In',
+    bookedAt: 'Just Now',
+    handledBy: 'Elena Rostova (Front Desk)',
+    status: 'Checked In',
+    guest: {
+      name: data.guestName,
+      email: data.guestEmail,
+      phone: data.guestPhone,
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200&h=200',
+      vipTier: data.vipTier as any,
+      nationality: data.nationality,
+      idType: 'Passport',
+      idNumber: data.idPassport,
+      specialRequests: data.specialRequests,
+    },
+    room: {
+      id: data.currentRoom.id,
+      name: data.currentRoom.name,
+      category: data.currentRoom.category,
+      roomNumber: data.selectedRoomNumber,
+      floor: 4,
+      heroImage: data.currentRoom.heroImage,
+      tagline: data.currentRoom.tagline,
+    },
+    stay: {
+      checkInDate: data.checkInDate,
+      checkInTime: '14:00',
+      checkOutDate: data.checkOutDate,
+      checkOutTime: '11:00',
+      nights: data.nightsCount,
+      adults: data.initialGuests,
+      children: 0,
+    },
+    financials: {
+      ratePerNight: data.currentRoom.pricePerNight,
+      roomTotal: data.baseRateUSD,
+      taxAmount: data.serviceTaxUSD,
+      serviceFee: 15,
+      addonsTotal: data.addOnsUSD,
+      discountAmount: 0,
+      totalAmount: data.totalPayableUSD,
+      amountPaid: data.totalPayableUSD,
+      balanceDue: 0,
+      currency: 'USD',
+      paymentStatus: 'Paid',
+      paymentMethod: 'POS Terminal (Front Desk)',
+      transactionRef: `TXN-FD-${Date.now()}`,
+    },
+    keycard: {
+      status: 'Active',
+      cardUid: `RFID-K${data.selectedRoomNumber}-${Math.floor(1000 + Math.random() * 9000)}`,
+      issuedAt: 'Today Just Now',
+      issuedBy: 'Elena Rostova',
+    },
+    addons: [
+      ...(data.includeBreakfast ? [{ id: 'addon-1', name: 'Complimentary Artisanal Breakfast', price: 0, quantity: 1 }] : []),
+      ...(data.includeAirportTransfer ? [{ id: 'addon-2', name: 'VIP Chauffeur Airport Transfer', price: 60, quantity: 1 }] : []),
+      ...(data.includeLateCheckout ? [{ id: 'addon-3', name: 'Late Checkout Guaranteed (4:00 PM)', price: 40, quantity: 1 }] : []),
+    ],
+    notes: [
+      {
+        id: `note-${Date.now()}`,
+        author: 'Elena Rostova',
+        role: 'Front Desk Receptionist',
+        text: `Walk-in registration finalized at front desk. ${data.vipTier} preferences noted. Keycard coded and handed to guest.`,
+        timestamp: 'Just Now',
+      },
+    ],
+  };
+
+  const confirmed = {
+    id: bookingId,
+    folioNumber: folioCode,
+    guestName: data.guestName,
+    guestPhone: data.guestPhone,
+    guestEmail: data.guestEmail,
+    idPassport: data.idPassport,
+    nationality: data.nationality,
+    vipTier: data.vipTier,
+    roomName: data.currentRoom.name,
+    roomNumber: data.selectedRoomNumber,
+    checkIn: data.checkInDate,
+    checkOut: data.checkOutDate,
+    nights: data.nightsCount,
+    paymentMethod: data.paymentMethod.toUpperCase(),
+    totalAmount: data.currency === 'NGN' ? `₦${data.totalPayableNGN.toLocaleString()}` : `$${data.totalPayableUSD.toLocaleString()}`,
+    dateIssued: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+  };
+
+  return { record, confirmed };
+}

@@ -1,0 +1,8 @@
+{
+  "name": "KeoExperience Hospitality OS",
+  "description": "Enterprise Hotel Operations and Property Management System with collapsible navigation, real-time room occupancy, guest management, and revenue intelligence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

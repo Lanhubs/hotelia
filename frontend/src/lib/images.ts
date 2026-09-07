@@ -1,0 +1,32 @@
+export const img = (id: string, w = 1400, h = 1000): string =>
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&q=82&w=${w}&h=${h}`
+
+export const ROOM_IMAGES: Record<string, string> = {
+  bedroomWarm: img('photo-1611892440504-42a792e24d32'),
+  bedroomLinen: img('photo-1590490360182-c33d57733427'),
+  bedroomSun: img('photo-1566665797739-1674de7a421a'),
+  bedroomSuite: img('photo-1578683010236-d716f9a3f461'),
+  bedroomResort: img('photo-1582719478250-c89cae4dc85b'),
+  bedroomMinimal: img('photo-1616627989153-c67c974f6de7'),
+  bedroomGuest: img('photo-1615873968403-89e068629265'),
+  livingApartment: img('photo-1522708323590-d24dbb6b0267'),
+  livingMinimal: img('photo-1502672260266-1c1ef2d93688'),
+  livingBright: img('photo-1600585154340-be6161a56a0c'),
+  livingLounge: img('photo-1600210492486-724fe5c67fb0'),
+  livingModern: img('photo-1600607687939-ce8a6c25118c'),
+  bathroomTiles: img('photo-1600566753086-00f18fb6b3ea'),
+  bathroomWash: img('photo-1584622650111-993a426fbf0a'),
+  diningTable: img('photo-1544148103-0773bf10d330'),
+  restaurant: img('photo-1414235077428-338989a2e8c0'),
+  restaurantWarm: img('photo-1552566626-52f8b828add9'),
+  foodPlate: img('photo-1504674900247-0877df9cc836'),
+  eventWedding: img('photo-1519167758481-83f550bb49b3'),
+  eventBallroom: img('photo-1464366400600-7168b8af9bc3'),
+  eventStage: img('photo-1505373877841-8d25efa7aff0'),
+  eventTables: img('photo-1492684223066-81342ee5ff30'),
+  eventParty: img('photo-1511578314322-379afb476865'),
+  conferenceRoom: img('photo-1530103862676-de8c9debad1d'),
+  courtyardPool: img('photo-1584132967334-10e028bd69f7'),
+  lobbyLounge: img('photo-1566073771259-6a8506099945'),
+  loungeSofa: img('photo-1555041469-a586c61ea9bc'),
+}

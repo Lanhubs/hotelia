@@ -1,0 +1,468 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>The Inkstone Hotel &amp; Suites — Official Folio &amp; Booking Receipt</title>
+<!-- Google Fonts: Noto Serif & Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary-fixed": "#d3e4ff",
+            "on-tertiary": "#ffffff",
+            "on-surface": "#131b2e",
+            "error-container": "#ffdad6",
+            "background": "#faf8ff",
+            "surface-bright": "#faf8ff",
+            "secondary": "#426086",
+            "on-tertiary-container": "#768696",
+            "error": "#ba1a1a",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed": "#d6e3fe",
+            "surface-dim": "#d2d9f4",
+            "surface-container": "#eaedff",
+            "on-surface-variant": "#44474c",
+            "on-secondary": "#ffffff",
+            "surface": "#faf8ff",
+            "surface-container-highest": "#dae2fd",
+            "secondary-container": "#b3d1fd",
+            "surface-container-high": "#e2e7ff",
+            "inverse-on-surface": "#eef0ff",
+            "on-secondary-container": "#3b5a7f",
+            "primary-container": "#0e1c2f",
+            "on-tertiary-fixed-variant": "#394857",
+            "surface-container-low": "#f2f3ff",
+            "primary-fixed-dim": "#bac7e1",
+            "inverse-surface": "#283044",
+            "secondary-fixed-dim": "#aac9f4",
+            "tertiary": "#000000",
+            "outline": "#75777d",
+            "on-error": "#ffffff",
+            "primary": "#000000",
+            "on-primary-fixed": "#0e1c2f",
+            "inverse-primary": "#bac7e1",
+            "tertiary-container": "#0d1d2a",
+            "on-primary": "#ffffff",
+            "tertiary-fixed-dim": "#b8c8da",
+            "on-error-container": "#93000a",
+            "tertiary-fixed": "#d4e4f6",
+            "outline-variant": "#c5c6cd",
+            "on-background": "#131b2e",
+            "surface-variant": "#dae2fd",
+            "on-tertiary-fixed": "#0d1d2a",
+            "on-secondary-fixed-variant": "#29486d",
+            "surface-tint": "#525f75",
+            "on-primary-container": "#77849c",
+            "on-primary-fixed-variant": "#3a475c",
+            "on-secondary-fixed": "#001c38"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "spacing-2xs": "0.25rem",
+            "container-max-width": "1280px",
+            "spacing-sm": "0.75rem",
+            "gutter-mobile": "1rem",
+            "spacing-xs": "0.5rem",
+            "gutter-desktop": "2rem",
+            "spacing-3xl": "4rem",
+            "spacing-lg": "1.5rem",
+            "spacing-2xl": "3rem",
+            "spacing-xl": "2rem",
+            "spacing-md": "1rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Noto Serif"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Noto Serif"],
+            "headline-sm": ["Noto Serif"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "display-lg-mobile": ["Noto Serif"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "financial-numeric": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "display-lg": ["Noto Serif"],
+            "headline-lg-mobile": ["Noto Serif"]
+          },
+          "fontSize": {
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.005em", "fontWeight": "500" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "600" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "body-md": ["15px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "financial-numeric": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "700" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "display-lg": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "0em", "fontWeight": "500" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .double-divider {
+      border-top: 1px solid #c5c6cd;
+      height: 4px;
+      border-bottom: 1px solid #c5c6cd;
+    }
+    @media print {
+      body { background: #ffffff !important; }
+      .no-print { display: none !important; }
+      .shadow-ledger { box-shadow: none !important; border: 1px solid #c5c6cd !important; }
+    }
+  </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-container min-h-screen flex flex-col">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-surface-container-lowest dark:bg-inverse-surface docked full-width top-0 z-40 border-b border-outline-variant dark:border-outline sticky">
+
+</header>
+<!-- Quick Action & Breadcrumb Sub-Bar -->
+<section class="bg-surface-container-lowest border-b border-outline-variant no-print">
+
+</section>
+<!-- Main Canvas -->
+<main class="max-w-container-max-width mx-auto px-spacing-xl py-spacing-2xl w-full flex-grow">
+<!-- Hero / Folio Status Banner -->
+<div class="mb-spacing-2xl bg-surface-container-lowest border border-outline-variant p-spacing-xl rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-spacing-lg shadow-[0_0_0_1px_rgba(197,198,205,0.2)]">
+<div class="space-y-1.5">
+<div class="flex items-center gap-spacing-sm flex-wrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-[#1e8e3e]"></span>
+            Payment Successful
+          </span>
+<span class="text-on-surface-variant font-label-md text-label-md">Issued: Oct 18, 2025</span>
+<span class="text-outline-variant">•</span>
+<span class="text-on-surface-variant font-label-md text-label-md">Folio: <strong class="text-on-surface font-semibold">FOL-2025-8841</strong></span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Reservation Receipt &amp; Guest Folio</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Confirmed registration for guest <span class="font-semibold text-on-surface">Alexander Wright</span>. Thank you for choosing The Inkstone Hotel &amp; Suites.</p>
+</div>
+<div class="text-left md:text-right border-t md:border-t-0 pt-spacing-sm md:pt-0 border-outline-variant">
+<span class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Confirmation Number</span>
+<span class="font-headline-md text-headline-md text-on-surface tracking-tight">#INK-84920-US</span>
+<span class="block font-label-md text-label-md text-secondary">Verified Secured Transaction</span>
+</div>
+</div>
+<!-- Editorial Two-Column Architecture Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-spacing-xl items-start">
+<!-- LEFT COLUMN: Main Ledger, Suite Specs & Financial Statement (8 Columns) -->
+<section class="lg:col-span-8 space-y-spacing-xl">
+<!-- Room & Stay Specification Showcase Card -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden shadow-[0_0_0_1px_rgba(197,198,205,0.15)]">
+<div class="grid grid-cols-1 md:grid-cols-12">
+<!-- Suite Image Showcase -->
+<div class="md:col-span-5 relative min-h-[220px] bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="An expansive luxury boutique hotel bedroom with a plush king-size bed draped in crisp white Egyptian cotton linens. Floor-to-ceiling glass doors open to a serene private oceanfront balcony with calm morning horizon views. The interior showcases dark architectural ink tones, warm minimalist hardwood accents, and refined bespoke lighting. Clean editorial composition in bright natural light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeUMJGzmDZQTs1K5LiBeRkd-hfnxCed5RCFUBxFgHzLNSAdg53xLe5mCBTDaiFFyXwRNQgT2SucnMsoWOtsko_KMFm70g_60kVOqYIBWJExrbbGy9jeNaYeawRHX_KA0gnR61h7Lz624T1o_tr5V-kc4P7hCyFo5MfYlqVPEE6mzlnZqCF3B-uOZGpNYcvEImgvS2X1Z15wcy4sC_08AyjLc_NOYm3ELEnvjlXfcgg4hE2uJYZeYlT4w">
+<span class="absolute top-3 left-3 bg-primary-container text-on-primary font-label-sm text-label-sm px-2.5 py-1 rounded tracking-widest uppercase">Oceanfront</span>
+</div>
+<!-- Suite Technical Meta -->
+<div class="md:col-span-7 p-spacing-lg flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Primary Reservation</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Room Assigned upon Arrival</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mt-1 mb-2">Deluxe King Suite — Oceanfront Balcony</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">
+                  Unobstructed Atlantic panorama featuring bespoke millwork, curated editorial mini-library, deep soaking marble tub, and private balcony seating.
+                </p>
+<!-- Badge Tags -->
+<div class="flex flex-wrap gap-2 pt-1 border-t border-outline-variant">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-low border border-outline-variant font-label-sm text-label-sm text-on-surface">
+<span class="material-symbols-outlined text-[15px]">bed</span> King Bed
+                  </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-low border border-outline-variant font-label-sm text-label-sm text-on-surface">
+<span class="material-symbols-outlined text-[15px]">square_foot</span> 620 sq ft
+                  </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-low border border-outline-variant font-label-sm text-label-sm text-on-surface">
+<span class="material-symbols-outlined text-[15px]">group</span> 2 Guests Max
+                  </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-low border border-outline-variant font-label-sm text-label-sm text-on-surface">
+<span class="material-symbols-outlined text-[15px]">balcony</span> Private Terrace
+                  </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Check-in & Check-out Tabular Bar -->
+<div class="grid grid-cols-1 sm:grid-cols-3 border-t border-outline-variant bg-surface-container-low divide-y sm:divide-y-0 sm:divide-x divide-outline-variant">
+<div class="p-spacing-md">
+<span class="block font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Check-In</span>
+<span class="font-body-md text-body-md font-semibold text-on-surface block mt-0.5">Fri, Oct 24, 2025</span>
+<span class="font-body-sm text-body-sm text-secondary">From 3:00 PM EST</span>
+</div>
+<div class="p-spacing-md">
+<span class="block font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Check-Out</span>
+<span class="font-body-md text-body-md font-semibold text-on-surface block mt-0.5">Mon, Oct 27, 2025</span>
+<span class="font-body-sm text-body-sm text-secondary">Until 11:00 AM EST</span>
+</div>
+<div class="p-spacing-md">
+<span class="block font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Length of Stay</span>
+<span class="font-body-md text-body-md font-semibold text-on-surface block mt-0.5">3 Nights</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Guaranteed Late Key Drop</span>
+</div>
+</div>
+</article>
+<!-- Itemized Financial Statement / Ledger Container -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden shadow-[0_0_0_1px_rgba(197,198,205,0.15)]">
+<div class="bg-surface-container-low px-spacing-lg py-spacing-md border-b border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">receipt_long</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Itemized Folio Statement</h2>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Currency: USD ($)</span>
+</div>
+<!-- Table-like line items -->
+<div class="p-spacing-lg space-y-spacing-md">
+<!-- Nightly Accommodations Line Item -->
+<div class="flex items-start justify-between py-2 border-b border-outline-variant border-dashed">
+<div class="pr-spacing-md">
+<div class="font-body-md text-body-md font-semibold text-on-surface">3 Nights × $285.00 / night</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant pl-4 mt-0.5">
+                  Deluxe King Suite — Oceanfront Balcony (Fri Oct 24 – Mon Oct 27)
+                </div>
+</div>
+<div class="font-financial-numeric text-financial-numeric text-on-surface whitespace-nowrap">
+                $855.00
+              </div>
+</div>
+<!-- Resort & Wellness Amenity Fee -->
+<div class="flex items-start justify-between py-2 border-b border-outline-variant border-dashed">
+<div class="pr-spacing-md">
+<div class="font-body-md text-body-md font-semibold text-on-surface">Resort &amp; Wellness Amenity Fee</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant pl-4 mt-0.5">
+                  Access to Private Pool, Thermal Suite &amp; Valet Parking throughout stay
+                </div>
+</div>
+<div class="font-financial-numeric text-financial-numeric text-on-surface whitespace-nowrap">
+                $75.00
+              </div>
+</div>
+<!-- Taxes & Levies -->
+<div class="flex items-start justify-between py-2 border-b border-outline-variant border-dashed">
+<div class="pr-spacing-md">
+<div class="font-body-md text-body-md font-semibold text-on-surface">Local Tourism &amp; Municipal Tax</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant pl-4 mt-0.5">
+                  Standard state accommodation assessment and coastal preservation surcharge (12.0%)
+                </div>
+</div>
+<div class="font-financial-numeric text-financial-numeric text-on-surface whitespace-nowrap">
+                $111.60
+              </div>
+</div>
+<!-- Subtotal Row -->
+<div class="flex items-center justify-between pt-2">
+<span class="font-body-md text-body-md text-on-surface-variant">Subtotal Assessed Charges</span>
+<span class="font-financial-numeric text-financial-numeric text-on-surface">$1,041.60</span>
+</div>
+<!-- Grand Total Divider (Double hairline) -->
+<div class="double-divider my-2"></div>
+<!-- Grand Total Row -->
+<div class="flex items-baseline justify-between py-1 bg-surface-container-low px-spacing-md rounded">
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold block">Total Paid</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary">Zero Balance Due at Arrival</span>
+</div>
+<div class="text-right">
+<span class="font-headline-md text-headline-md font-semibold text-on-surface">$1,041.60</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant uppercase">USD</span>
+</div>
+</div>
+</div>
+<!-- Payment Verification Audit Footer -->
+<div class="bg-surface-container-low px-spacing-lg py-spacing-md border-t border-outline-variant grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-spacing-md text-on-surface-variant">
+<div>
+<span class="block font-label-sm text-label-sm uppercase tracking-wider text-secondary">Payment Method</span>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface flex items-center gap-1.5 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">credit_card</span> Master Brand •••• 4289
+              </span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm uppercase tracking-wider text-secondary">Authorization ID</span>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface mt-0.5 block">TXN-98214-AA</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm uppercase tracking-wider text-secondary">Processed Timestamp</span>
+<span class="font-body-sm text-body-sm text-on-surface mt-0.5 block">Oct 18, 2025, 14:32 EST</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm uppercase tracking-wider text-secondary">Billing State</span>
+<span class="inline-flex items-center gap-1 font-body-sm text-body-sm text-[#1e8e3e] font-semibold mt-0.5">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">check_circle</span> Settled in Full
+              </span>
+</div>
+</div>
+</article>
+<!-- Terms of Stay & Folio Policy Ledger -->
+<article class="bg-surface-container-lowest border border-outline-variant p-spacing-lg rounded-lg">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-secondary">policy</span>
+            Check-In Guidelines &amp; Cancellation Terms
+          </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-spacing-lg text-on-surface-variant font-body-sm text-body-sm">
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface mb-1">Guarantee &amp; Incidentals</h4>
+<p class="">A valid government photo ID and matching credit card are required upon arrival. An incidental security hold of $100.00 USD per night will be pre-authorized and released upon key surrender.</p>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface mb-1">Modification &amp; Cancellation</h4>
+<p class="">Complimentary cancellation or stay date amendments are permitted until 72 hours prior to 3:00 PM EST on Oct 24, 2025. Late cancellations incur a one-night room charge.</p>
+</div>
+</div>
+</article>
+</section>
+<!-- RIGHT COLUMN: Sticky Concierge, Digital Check-In Pass, & Property Details (4 Columns) -->
+<aside class="lg:col-span-4 space-y-spacing-xl sticky top-28">
+<!-- Digital Check-In Pass (Express Kiosk Boarding Ticket) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden shadow-[0_12px_32px_-8px_rgba(11,25,44,0.06),0_0_0_1px_#E2E8F0]">
+<!-- Pass Header Strip -->
+<div class="bg-primary-container text-on-primary p-spacing-md flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">qr_code_scanner</span>
+<span class="font-label-lg text-label-lg tracking-wide uppercase">Express Arrival Pass</span>
+</div>
+<span class="font-label-sm text-label-sm bg-white/10 px-2 py-0.5 rounded text-white tracking-widest">DIGITAL KEY</span>
+</div>
+<!-- Pass Body -->
+<div class="p-spacing-lg text-center space-y-spacing-md">
+<div>
+<span class="block font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Folio Access Code</span>
+<span class="font-financial-numeric text-financial-numeric font-bold text-on-surface text-[18px]">INK-84920-W</span>
+</div>
+<!-- QR Code Container Graphic -->
+<div class="bg-surface-container-low p-4 rounded border border-outline-variant inline-block mx-auto">
+<svg class="w-40 h-40 mx-auto" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<!-- QR Stylized Matrix Representation -->
+<rect fill="#f2f3ff" height="100" rx="4" width="100"></rect>
+<!-- Top Left Marker -->
+<rect fill="#0e1c2f" height="26" rx="2" width="26" x="8" y="8"></rect>
+<rect fill="#ffffff" height="16" rx="1" width="16" x="13" y="13"></rect>
+<rect fill="#0e1c2f" height="8" width="8" x="17" y="17"></rect>
+<!-- Top Right Marker -->
+<rect fill="#0e1c2f" height="26" rx="2" width="26" x="66" y="8"></rect>
+<rect fill="#ffffff" height="16" rx="1" width="16" x="71" y="13"></rect>
+<rect fill="#0e1c2f" height="8" width="8" x="75" y="17"></rect>
+<!-- Bottom Left Marker -->
+<rect fill="#0e1c2f" height="26" rx="2" width="26" x="8" y="66"></rect>
+<rect fill="#ffffff" height="16" rx="1" width="16" x="13" y="71"></rect>
+<rect fill="#0e1c2f" height="8" width="8" x="17" y="75"></rect>
+<!-- Data Bits Grid -->
+<rect fill="#0e1c2f" height="6" width="6" x="40" y="12"></rect>
+<rect fill="#0e1c2f" height="6" width="6" x="50" y="12"></rect>
+<rect fill="#0e1c2f" height="6" width="6" x="40" y="24"></rect>
+<rect fill="#0e1c2f" height="6" width="10" x="50" y="32"></rect>
+<rect fill="#0e1c2f" height="8" width="8" x="12" y="44"></rect>
+<rect fill="#0e1c2f" height="6" width="6" x="24" y="44"></rect>
+<rect fill="#0e1c2f" height="6" width="10" x="36" y="44"></rect>
+<rect fill="#0e1c2f" height="12" width="6" x="52" y="44"></rect>
+<rect fill="#0e1c2f" height="8" width="8" x="64" y="44"></rect>
+<rect fill="#0e1c2f" height="6" width="10" x="78" y="44"></rect>
+<rect fill="#0e1c2f" height="8" width="8" x="40" y="60"></rect>
+<rect fill="#0e1c2f" height="8" width="8" x="54" y="62"></rect>
+<rect fill="#0e1c2f" height="14" width="6" x="68" y="58"></rect>
+<rect fill="#0e1c2f" height="8" width="8" x="80" y="58"></rect>
+<rect fill="#0e1c2f" height="6" width="12" x="40" y="76"></rect>
+<rect fill="#0e1c2f" height="12" width="6" x="58" y="76"></rect>
+<rect fill="#0e1c2f" height="6" width="18" x="70" y="78"></rect>
+<rect fill="#0e1c2f" height="6" width="8" x="44" y="86"></rect>
+<rect fill="#0e1c2f" height="6" width="8" x="80" y="88"></rect>
+</svg>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Present this pass at any lobby kiosk or with our valet to bypass the front desk and transmit your digital room key straight to your mobile device.
+            </p>
+<!-- Apple Wallet Sync Button -->
+<div class="pt-spacing-xs">
+<button class="w-full py-2.5 px-4 bg-primary text-on-primary font-label-md text-label-md rounded flex items-center justify-center gap-2 hover:bg-opacity-90 transition-colors">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">wallet</span>
+<span class="">Send Key to Smartphone</span>
+</button>
+</div>
+</div>
+<div class="bg-surface-container-low px-spacing-md py-spacing-xs border-t border-outline-variant text-center">
+<span class="font-label-sm text-label-sm text-secondary tracking-wider">LOBBY TERMINALS • VALET • CONCIERGE</span>
+</div>
+</div>
+<!-- Dedicated Concierge Contact Card -->
+<div class="bg-surface-container-lowest border border-outline-variant p-spacing-lg rounded-lg space-y-spacing-md">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">room_service</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm uppercase tracking-widest text-secondary">24/7 Service</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Private Concierge</h3>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Coordinate private ocean transport, reserve chef-table seatings at The Inkstone Dining Room, or request room personalization prior to Oct 24.
+          </p>
+<div class="space-y-2 pt-2 border-t border-outline-variant font-body-sm text-body-sm">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">call</span> Telephone
+              </span>
+<span class="font-semibold text-on-surface">+1 (800) 582-4190</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">mail</span> Private Desk
+              </span>
+<span class="font-semibold text-on-surface">desk@inkstonehotel.com</span>
+</div>
+</div>
+</div>
+<!-- Hotel Location & Coordinate Card -->
+<div class="bg-surface-container-lowest border border-outline-variant p-spacing-lg rounded-lg space-y-2">
+<div class="flex items-center justify-between">
+<h4 class="font-label-lg text-label-lg text-on-surface uppercase tracking-wider">Property Location</h4>
+<span class="material-symbols-outlined text-secondary text-[18px]">location_on</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            The Inkstone Hotel &amp; Suites<br>
+            420 Pelican Point Way, North Enclave<br>
+            Newport, RI 02840, United States
+          </p>
+<div class="pt-2">
+<a class="font-label-sm text-label-sm text-secondary hover:underline inline-flex items-center gap-1" href="#">
+<span class="">View Arrival &amp; Valet Map</span>
+<span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+</a>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-surface-container-low dark:bg-inverse-surface border-t border-outline-variant dark:border-outline w-full mt-auto">
+
+</footer>
+
+
+</body></html>

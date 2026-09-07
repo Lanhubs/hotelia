@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Geologica', 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --color-paper: #f7f5f0;
+  --color-paper-soft: #f1eee7;
+  --color-paper-deep: #eae6dc;
+  --color-ink: #1c1a17;
+  --color-ink-soft: #2a2824;
+  --color-ink-mute: #6b655c;
+  --color-hairline: #e6e1d7;
+  --color-bronze: #a98a5f;
+  --color-bronze-deep: #8c6f47;
+  --color-bronze-soft: #c9b391;
+  --color-error: #a4513a;
+
+  --tracking-tight: -0.025em;
+  --tracking-normal: -0.01em;
+  --tracking-wide: 0.14em;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  --shadow-soft: 0 14px 34px -18px rgba(28, 26, 23, 0.25);
+  --shadow-card: 0 22px 46px -24px rgba(28, 26, 23, 0.32);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    letter-spacing: -0.011em;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+
+  input, button, select, textarea {
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background-color: var(--color-bronze);
+    color: var(--color-paper);
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.025em;
+}
+
+@utility font-numeric {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+@layer components {
+  .container-x {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 80rem;
+    padding-inline: 1.25rem;
+  }
+
+  .hairline-t {
+    border-top: 1px solid var(--color-hairline);
+  }
+
+  .hairline-b {
+    border-bottom: 1px solid var(--color-hairline);
+  }
+
+  @media (min-width: 48rem) {
+    .container-x {
+      padding-inline: 2.5rem;
+    }
+  }
+}
+
+@media print {
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+  }
+
+  .receipt-sheet {
+    border: none !important;
+    box-shadow: none !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .receipt-sheet,
+  .receipt-sheet * {
+    color: #000 !important;
+  }
+}
