@@ -22,15 +22,23 @@ import { ConfigPage } from './pages/ConfigPage';
 
 import GlobalToastContainer from './components/common/GlobalToastContainer';
 import { AdminPageLoader } from './components/common/AdminPageLoader';
+import ToastContainer from './components/notifications/ToastContainer';
+import { useNotificationStore } from './stores/notificationStore';
 
 export default function App() {
   const [isBooting, setIsBooting] = useState(true);
+  const loadFromApi = useNotificationStore((state) => state.loadFromApi);
 
   useEffect(() => {
     // Simulate PMS system boot — typically 1.6s is enough to feel polished
     const timer = setTimeout(() => setIsBooting(false), 1800);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    // Load notifications from API on mount
+    loadFromApi();
+  }, [loadFromApi]);
 
   if (isBooting) {
     return (
@@ -44,6 +52,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <ToastContainer />
       <GlobalToastContainer />
       <Routes>
         {/* Authentication Portal */}

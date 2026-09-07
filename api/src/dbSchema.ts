@@ -263,6 +263,22 @@ export const CREATE_IDEMPOTENCY_TABLE = `
   )
 `;
 
+export const CREATE_NOTIFICATIONS_TABLE = `
+  CREATE TABLE IF NOT EXISTS notifications (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    type TEXT NOT NULL CHECK(type IN ('booking', 'payment', 'keycard', 'service', 'housekeeping', 'system')),
+    severity TEXT NOT NULL CHECK(severity IN ('info', 'success', 'urgent')),
+    title TEXT NOT NULL CHECK(length(title) <= 100),
+    message TEXT NOT NULL CHECK(length(message) <= 500),
+    meta TEXT,
+    read INTEGER DEFAULT 0,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    source TEXT NOT NULL CHECK(source IN ('action', 'inbound')),
+    navigate_to TEXT
+  )
+`;
+
 export const SEED_EXTRAS = `
   INSERT OR IGNORE INTO extras (id, slug, name, description, price, price_naira, per_night, icon) VALUES
     ('extra-1', 'airport-transfer', 'Airport Transfer', 'Private chauffeured return transfer from MMIA', 120, 192000, 0, 'car'),

@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { AppNotification, NotificationDraft } from '../types/notification';
+import { notificationApi } from '../lib/api';
 
 const MAX_NOTIFICATIONS = 60;
 
@@ -9,15 +10,18 @@ interface NotificationState {
   unreadCount: number;
   isDrawerOpen: boolean;
   liveFeed: boolean;
+  isLoading: boolean;
 
-  push: (draft: NotificationDraft) => void;
-  markRead: (id: string) => void;
-  markAllRead: () => void;
-  clearAll: () => void;
-  removeNotification: (id: string) => void;
+  push: (draft: NotificationDraft) => Promise<void>;
+  markRead: (id: string) => Promise<void>;
+  markAllRead: () => Promise<void>;
+  clearAll: () => Promise<void>;
+  removeNotification: (id: string) => Promise<void>;
   setDrawerOpen: (open: boolean) => void;
   toggleDrawer: () => void;
   setLiveFeed: (on: boolean) => void;
+  loadFromApi: () => Promise<void>;
+  syncUnreadCount: () => Promise<void>;
 }
 
 const SEED_NOTIFICATIONS: AppNotification[] = [
@@ -76,49 +80,150 @@ export const useNotificationStore = create<NotificationState>()(
       unreadCount: SEED_NOTIFICATIONS.filter((n) => !n.read).length,
       isDrawerOpen: false,
       liveFeed: false,
+      isLoading: false,
 
-      push: (draft) =>
-        set((state) => {
-          const notification: AppNotification = {
-            ...draft,
-            id: `notif-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-            timestamp: Date.now(),
-            read: false,
-          };
-          const notifications = [notification, ...state.notifications].slice(0, MAX_NOTIFICATIONS);
-          return { notifications, unreadCount: state.unreadCount + 1 };
-        }),
+      push: async (draft) => {
+        try {
+          // Sync to API
+          await notificationApi.createNotification({
+            type: draft.type,
+            severity: draft.severity,
+            title: draft.title,
+            message: draft.message,
+            meta: draft.meta,
+            source: draft.source,
+            navigateTo: draft.navigateTo,
+          });
+          
+          // Update local state
+          set((state) => {
+            const notification: AppNotification = {
+              ...draft,
+              id: `notif-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+              timestamp: Date.now(),
+              read: false,
+            };
+            const notifications = [notification, ...state.notifications].slice(0, MAX_NOTIFICATIONS);
+            return { notifications, unreadCount: state.unreadCount + 1 };
+          });
+        } catch (error) {
+          console.error('Failed to create notification:', error);
+          // Fall back to local push if API fails
+          set((state) => {
+            const notification: AppNotification = {
+              ...draft,
+              id: `notif-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+              timestamp: Date.now(),
+              read: false,
+            };
+            const notifications = [notification, ...state.notifications].slice(0, MAX_NOTIFICATIONS);
+            return { notifications, unreadCount: state.unreadCount + 1 };
+          });
+        }
+      },
 
-      markRead: (id) =>
-        set((state) => {
-          const target = state.notifications.find((n) => n.id === id);
-          if (!target || target.read) return state;
-          return {
-            notifications: state.notifications.map((n) => (n.id === id ? { ...n, read: true } : n)),
-            unreadCount: Math.max(0, state.unreadCount - 1),
-          };
-        }),
+      markRead: async (id) => {
+        try {
+          await notificationApi.markAsRead(id);
+          set((state) => {
+            const target = state.notifications.find((n) => n.id === id);
+            if (!target || target.read) return state;
+            return {
+              notifications: state.notifications.map((n) => (n.id === id ? { ...n, read: true } : n)),
+              unreadCount: Math.max(0, state.unreadCount - 1),
+            };
+          });
+        } catch (error) {
+          console.error('Failed to mark notification as read:', error);
+          // Fall back to local update if API fails
+          set((state) => {
+            const target = state.notifications.find((n) => n.id === id);
+            if (!target || target.read) return state;
+            return {
+              notifications: state.notifications.map((n) => (n.id === id ? { ...n, read: true } : n)),
+              unreadCount: Math.max(0, state.unreadCount - 1),
+            };
+          });
+        }
+      },
 
-      markAllRead: () =>
-        set((state) => ({
-          notifications: state.notifications.map((n) => ({ ...n, read: true })),
-          unreadCount: 0,
-        })),
+      markAllRead: async () => {
+        try {
+          await notificationApi.markAllAsRead();
+          set((state) => ({
+            notifications: state.notifications.map((n) => ({ ...n, read: true })),
+            unreadCount: 0,
+          }));
+        } catch (error) {
+          console.error('Failed to mark all notifications as read:', error);
+          // Fall back to local update if API fails
+          set((state) => ({
+            notifications: state.notifications.map((n) => ({ ...n, read: true })),
+            unreadCount: 0,
+          }));
+        }
+      },
 
-      clearAll: () => set({ notifications: [], unreadCount: 0 }),
+      clearAll: async () => {
+        try {
+          await notificationApi.deleteAll();
+          set({ notifications: [], unreadCount: 0 });
+        } catch (error) {
+          console.error('Failed to clear all notifications:', error);
+          // Fall back to local clear if API fails
+          set({ notifications: [], unreadCount: 0 });
+        }
+      },
 
-      removeNotification: (id) =>
-        set((state) => {
-          const target = state.notifications.find((n) => n.id === id);
-          return {
-            notifications: state.notifications.filter((n) => n.id !== id),
-            unreadCount: target && !target.read ? Math.max(0, state.unreadCount - 1) : state.unreadCount,
-          };
-        }),
+      removeNotification: async (id) => {
+        try {
+          await notificationApi.deleteNotification(id);
+          set((state) => {
+            const target = state.notifications.find((n) => n.id === id);
+            return {
+              notifications: state.notifications.filter((n) => n.id !== id),
+              unreadCount: target && !target.read ? Math.max(0, state.unreadCount - 1) : state.unreadCount,
+            };
+          });
+        } catch (error) {
+          console.error('Failed to remove notification:', error);
+          // Fall back to local remove if API fails
+          set((state) => {
+            const target = state.notifications.find((n) => n.id === id);
+            return {
+              notifications: state.notifications.filter((n) => n.id !== id),
+              unreadCount: target && !target.read ? Math.max(0, state.unreadCount - 1) : state.unreadCount,
+            };
+          });
+        }
+      },
 
       setDrawerOpen: (open) => set({ isDrawerOpen: open }),
       toggleDrawer: () => set((state) => ({ isDrawerOpen: !state.isDrawerOpen })),
       setLiveFeed: (on) => set({ liveFeed: on }),
+      loadFromApi: async () => {
+        set({ isLoading: true });
+        try {
+          const response = await notificationApi.getNotifications(60, 0);
+          set({ notifications: response.notifications || [], isLoading: false });
+          get().syncUnreadCount();
+        } catch (error) {
+          console.error('Failed to load notifications from API:', error);
+          set({ isLoading: false });
+        }
+      },
+      syncUnreadCount: async () => {
+        try {
+          const response = await notificationApi.getUnreadCount();
+          set({ unreadCount: response.unreadCount });
+        } catch (error) {
+          console.error('Failed to sync unread count:', error);
+          // Fallback to local calculation
+          const notifications = get().notifications;
+          const unreadCount = notifications.filter((n) => !n.read).length;
+          set({ unreadCount });
+        }
+      },
     }),
     {
       name: 'KeoExperience-pms-notifications-storage',

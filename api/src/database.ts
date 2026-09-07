@@ -10,6 +10,7 @@ import {
   CREATE_PAYMENTS_TABLE,
   CREATE_EXTRAS_TABLE,
   CREATE_IDEMPOTENCY_TABLE,
+  CREATE_NOTIFICATIONS_TABLE,
   SEED_EXTRAS,
 } from './dbSchema';
 
@@ -214,6 +215,7 @@ export async function initDatabase() {
     await db.query(CREATE_PAYMENTS_TABLE);
     await db.query(CREATE_EXTRAS_TABLE);
     await db.query(CREATE_IDEMPOTENCY_TABLE);
+    await db.query(CREATE_NOTIFICATIONS_TABLE);
     await seedStaffUsers(db);
     await seedDefaultRooms(db);
     await db.query(SEED_EXTRAS);

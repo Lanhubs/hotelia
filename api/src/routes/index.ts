@@ -10,6 +10,7 @@ import adminServicesRouter from './admin/services'
 import adminSettingsRouter from './admin/settings'
 import adminDashboardRouter from './admin/dashboard'
 import adminStaffRouter from './admin/staff'
+import notificationRouter from './notifications'
 import { rateLimit } from '../middlewares/rateLimit'
 import uploadController from '../controllers/uploadController'
 
@@ -58,6 +59,9 @@ router.post('/payments/submit-birthday', publicPaymentController.submitBirthday)
 // ── Misc ───────────────────────────────────────────────────────────────────
 router.get('/hotel', async (c) => c.json({ hotel: 'KEO Experience Hotel' }))
 router.get('/gallery', async (c) => c.json({ gallery: [] }))
+
+// ── Notifications ──────────────────────────────────────────────────────────
+router.route('/notifications', notificationRouter)
 
 // ── Admin routes ───────────────────────────────────────────────────────────
 router.route('/admin/auth', adminAuthRouter)

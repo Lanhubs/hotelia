@@ -196,4 +196,138 @@ const Api = new ApiClient({
     'X-Client-Version': '1.0.0',
   },
 });
+
+// ── Notification API Methods ─────────────────────────────────────────────────
+const notificationApi = {
+  /**
+   * Get all notifications
+   * @param limit Maximum number of notifications (default: 20)
+   * @param offset Number of notifications to skip (default: 0)
+   */
+  getNotifications: async (limit: number = 20, offset: number = 0) => {
+    const params = new URLSearchParams({ limit: String(limit), offset: String(offset) })
+    return Api.get<{ notifications: any[] }>('/notifications?' + params.toString())
+  },
+
+  /**
+   * Get unread notification count
+   */
+  getUnreadCount: async () => {
+    return Api.get<{ unreadCount: number }>('/notifications/unread-count')
+  },
+
+  /**
+   * Create a new notification
+   */
+  createNotification: async (data: {
+    type: 'booking' | 'payment' | 'keycard' | 'service' | 'housekeeping' | 'system'
+    severity: 'info' | 'success' | 'urgent'
+    title: string
+    message: string
+    meta?: string
+    source: 'action' | 'inbound'
+    navigateTo?: string
+  }) => {
+    return Api.post<{ notification: any; message: string }>('/notifications', data)
+  },
+
+  /**
+   * Mark a notification as read
+   * @param id Notification ID
+   */
+  markAsRead: async (id: string) => {
+    return Api.patch<{ success: boolean; message: string }>(`/notifications/${id}/read`)
+  },
+
+  /**
+   * Mark all notifications as read
+   */
+  markAllAsRead: async () => {
+    return Api.patch<{ success: boolean; message: string; readCount: number }>('/notifications/read-all')
+  },
+
+  /**
+   * Delete a specific notification
+   * @param id Notification ID
+   */
+  deleteNotification: async (id: string) => {
+    return Api.delete<{ success: boolean; message: string }>(`/notifications/${id}`)
+  },
+
+  /**
+   * Delete all notifications
+   */
+  deleteAll: async () => {
+    return Api.delete<{ success: boolean; message: string; deletedCount: number }>('/notifications')
+  },
+
+  // Helper methods for common notification types
+  sendBooking: (title: string, message: string, meta?: string, navigateTo?: string) =>
+    notificationApi.createNotification({
+      type: 'booking',
+      severity: 'info',
+      title,
+      message,
+      meta,
+      source: 'inbound',
+      navigateTo,
+    }),
+
+  sendPayment: (title: string, message: string, meta?: string, navigateTo?: string) =>
+    notificationApi.createNotification({
+      type: 'payment',
+      severity: 'success',
+      title,
+      message,
+      meta,
+      source: 'inbound',
+      navigateTo,
+    }),
+
+  sendKeycard: (title: string, message: string, meta?: string, navigateTo?: string) =>
+    notificationApi.createNotification({
+      type: 'keycard',
+      severity: 'info',
+      title,
+      message,
+      meta,
+      source: 'inbound',
+      navigateTo,
+    }),
+
+  sendService: (title: string, message: string, meta?: string, navigateTo?: string) =>
+    notificationApi.createNotification({
+      type: 'service',
+      severity: 'info',
+      title,
+      message,
+      meta,
+      source: 'action',
+      navigateTo,
+    }),
+
+  sendHousekeeping: (title: string, message: string, meta?: string, navigateTo?: string) =>
+    notificationApi.createNotification({
+      type: 'housekeeping',
+      severity: 'info',
+      title,
+      message,
+      meta,
+      source: 'action',
+      navigateTo,
+    }),
+
+  sendSystem: (title: string, message: string, meta?: string, navigateTo?: string) =>
+    notificationApi.createNotification({
+      type: 'system',
+      severity: 'urgent',
+      title,
+      message,
+      meta,
+      source: 'action',
+      navigateTo,
+    }),
+}
+
+export { notificationApi }
 export default Api;
