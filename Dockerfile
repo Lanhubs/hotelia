@@ -1,35 +1,23 @@
-# Multi-stage build for KEO Hotel Monorepo
+# Multi-stage build for KEO Hotel Monorepo using Bun
 FROM oven/bun:1 AS base
 
 # Stage 1: Build Frontend
-FROM node:20-slim AS frontend-builder
+FROM base AS frontend-builder
 WORKDIR /app/frontend
 
-# Install build dependencies
-RUN apt-get update && apt-get install -y \
-    python3 \
-    make \
-    g++ \
-    && rm -rf /var/lib/apt/lists/*
-
 COPY frontend/package*.json ./
-RUN bun ci --include=optional
+COPY frontend/bun.lock* ./
+RUN bun install
 COPY frontend/ ./
 RUN bun run build
 
 # Stage 2: Build Admin
-FROM node:20-slim AS admin-builder
+FROM base AS admin-builder
 WORKDIR /app/admin
 
-# Install build dependencies
-RUN apt-get update && apt-get install -y \
-    python3 \
-    make \
-    g++ \
-    && rm -rf /var/lib/apt/lists/*
-
 COPY admin/package*.json ./
-RUN bun ci --include=optional
+COPY admin/bun.lock* ./
+RUN bun install
 COPY admin/ ./
 RUN bun run build
 
@@ -39,7 +27,7 @@ WORKDIR /app
 
 # Install dependencies
 COPY api/package.json api/bun.lock* ./
-RUN bun install --frozen-lockfile
+RUN bun install
 
 # Copy API source
 COPY api/ ./
