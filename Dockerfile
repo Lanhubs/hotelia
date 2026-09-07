@@ -2,20 +2,36 @@
 FROM oven/bun:1 AS base
 
 # Stage 1: Build Frontend
-FROM node:20-alpine AS frontend-builder
+FROM node:20-slim AS frontend-builder
 WORKDIR /app/frontend
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    python3 \
+    make \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY frontend/package*.json ./
-RUN npm ci
+RUN bun ci --include=optional
 COPY frontend/ ./
-RUN npm run build
+RUN bun run build
 
 # Stage 2: Build Admin
-FROM node:20-alpine AS admin-builder
+FROM node:20-slim AS admin-builder
 WORKDIR /app/admin
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    python3 \
+    make \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY admin/package*.json ./
-RUN npm ci
+RUN bun ci --include=optional
 COPY admin/ ./
-RUN npm run build
+RUN bun run build
 
 # Stage 3: Build API and assemble
 FROM base AS final
