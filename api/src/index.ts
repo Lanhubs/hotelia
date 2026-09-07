@@ -28,14 +28,21 @@ app.get('/health', (c) => c.text('OK'))
 // API routes - Must come BEFORE static file serving
 app.route('/api', router)
 
-// Serve admin static assets
+// Serve admin static assets (including JS/CSS)
 app.use('/admin/*', serveStatic({ 
   root: './public',
-  rewriteRequestPath: (path) => path.replace(/^\/admin/, '/admin')
 }))
 
-// Admin SPA fallback - catch all admin routes and serve index.html
-app.get('/admin/*', async (c) => {
+// Admin SPA fallback - ONLY for non-file requests (no extension or .html)
+app.get('/admin*', async (c) => {
+  const path = c.req.path
+  
+  // If it's a file request (has extension), let serveStatic handle it
+  if (path.match(/\.[a-zA-Z0-9]+$/)) {
+    return c.notFound()
+  }
+  
+  // Otherwise serve index.html for SPA routing
   const indexFile = Bun.file('./public/admin/index.html')
   if (await indexFile.exists()) {
     return c.html(await indexFile.text())
@@ -51,7 +58,12 @@ app.use('/*', serveStatic({
 // Landing page SPA fallback - catch all other routes and serve index.html
 app.get('/*', async (c) => {
   // Skip API routes
-  if (c.req.path.startsWith('/api')) {
+  if (c.req.path.startsWith('/api') || c.req.path.startsWith('/admin')) {
+    return c.notFound()
+  }
+  
+  // If it's a file request (has extension), let serveStatic handle it
+  if (c.req.path.match(/\.[a-zA-Z0-9]+$/)) {
     return c.notFound()
   }
   
