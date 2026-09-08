@@ -8,31 +8,31 @@ export const NAVIGATION_SECTIONS: NavigationSection[] = [
       {
         id: 'dashboard',
         label: 'Dashboard',
-        path: '/admin/dashboard',
+        path: '/dashboard',
         icon: 'dashboard',
       },
       {
         id: 'accommodation',
         label: 'Accommodation',
-        path: '/admin/accommodation',
+        path: '/accommodation',
         icon: 'accommodation',
       },
       {
         id: 'bookings',
         label: 'Bookings & Folios',
-        path: '/admin/bookings',
+        path: '/bookings',
         icon: 'bookings',
       },
       {
         id: 'travel',
         label: 'Travel',
-        path: '/admin/travel',
+        path: '/travel',
         icon: 'travel',
       },
       {
         id: 'catering',
         label: 'Catering',
-        path: '/admin/services',
+        path: '/services',
         icon: 'catering',
       },
     ],
@@ -44,16 +44,15 @@ export const NAVIGATION_SECTIONS: NavigationSection[] = [
       {
         id: 'reports',
         label: 'Reports and Analytics',
-        path: '/admin/revenue',
+        path: '/revenue',
         icon: 'reports',
       },
       {
         id: 'accounting',
         label: 'Accounting',
-        path: '/admin/transactions',
+        path: '/transactions',
         icon: 'accounting',
       },
-      
     ],
   },
   {
@@ -63,13 +62,13 @@ export const NAVIGATION_SECTIONS: NavigationSection[] = [
       {
         id: 'settings',
         label: 'Settings',
-        path: '/admin/settings',
+        path: '/settings',
         icon: 'settings',
       },
       {
         id: 'help',
         label: 'Help and Support',
-        path: '/admin/help',
+        path: '/help',
         icon: 'help',
       },
     ],

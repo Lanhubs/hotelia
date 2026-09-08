@@ -23,6 +23,7 @@ import { ConfigPage } from './pages/ConfigPage';
 import GlobalToastContainer from './components/common/GlobalToastContainer';
 import { AdminPageLoader } from './components/common/AdminPageLoader';
 import ToastContainer from './components/notifications/ToastContainer';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { useNotificationStore } from './stores/notificationStore';
 
 export default function App() {
@@ -51,17 +52,21 @@ export default function App() {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/admin">
       <ToastContainer />
       <GlobalToastContainer />
       <Routes>
         {/* Authentication Portal */}
-        <Route path="/admin/login" element={<LoginPage />} />
-        <Route path="/admin/auth/login" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/auth/login" element={<LoginPage />} />
 
         {/* Master Admin / Front Desk Workspace */}
-        <Route path="/admin" element={<AppShell />}>
-          <Route index element={<Navigate to="/admin/dashboard" replace />} />
+        <Route path="/" element={
+          <ProtectedRoute>
+            <AppShell />
+          </ProtectedRoute>
+        }>
+          <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<DashboardPage />} />
 
           {/* Accommodation & Walk-In Reservation Workflow */}
@@ -97,8 +102,7 @@ export default function App() {
           <Route path="config" element={<ConfigPage />} />
         </Route>
 
-        <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
-        <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </BrowserRouter>
   );

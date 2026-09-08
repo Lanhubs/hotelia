@@ -35,7 +35,7 @@ const SEED_NOTIFICATIONS: AppNotification[] = [
     timestamp: Date.now() - 45 * 60 * 1000,
     read: false,
     source: 'action',
-    navigateTo: '/admin/bookings',
+    navigateTo: '/bookings',
   },
   {
     id: 'notif-seed-2',
@@ -47,7 +47,7 @@ const SEED_NOTIFICATIONS: AppNotification[] = [
     timestamp: Date.now() - 3 * 60 * 60 * 1000,
     read: false,
     source: 'inbound',
-    navigateTo: '/admin/bookings',
+    navigateTo: '/bookings',
   },
   {
     id: 'notif-seed-3',

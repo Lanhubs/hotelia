@@ -135,7 +135,7 @@ export const WalkInReservationPage: React.FC = () => {
       ) : (
         <WalkInConfirmation
           confirmedBooking={confirmedBooking} onPrint={() => window.print()}
-          onTrackInBookings={() => navigate('/admin/bookings')} onReturnToRooms={() => navigate('/admin/accommodation')}
+          onTrackInBookings={() => navigate('/bookings')} onReturnToRooms={() => navigate('/accommodation')}
         />
       )}
     </div>

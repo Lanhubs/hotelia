@@ -26,7 +26,7 @@ export const useServiceOrderStore = create<ServiceOrderState>((set, get) => ({
       message: `Order #${order.id} for ${order.guestName} (Room ${order.roomNumber}) · ${order.department}`,
       meta: order.id,
       source: 'action',
-      navigateTo: '/admin/services',
+      navigateTo: '/services',
     });
   },
 
@@ -53,7 +53,7 @@ export const useServiceOrderStore = create<ServiceOrderState>((set, get) => ({
       message: `Order #${orderId} for ${order.guestName} (Room ${order.roomNumber}) is now ${nextStatus}`,
       meta: orderId,
       source: 'action',
-      navigateTo: '/admin/services',
+      navigateTo: '/services',
     });
 
     return nextStatus;

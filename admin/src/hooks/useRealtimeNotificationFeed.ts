@@ -18,7 +18,7 @@ const INBOUND_EVENTS: InboundTemplate[] = [
     title: 'New OTA booking received',
     message: 'Alexander Hayes · Executive Suite · 3 nights via Booking.com',
     meta: 'OTA-BKG-4821',
-    navigateTo: '/admin/bookings',
+    navigateTo: '/bookings',
   },
   {
     type: 'booking',
@@ -26,7 +26,7 @@ const INBOUND_EVENTS: InboundTemplate[] = [
     title: 'High-priority booking created',
     message: 'Sir Arthur Stirling · Ocean Villa · 5 nights via Expedia',
     meta: 'OTA-BKG-4823',
-    navigateTo: '/admin/bookings',
+    navigateTo: '/bookings',
   },
   {
     type: 'payment',
@@ -34,7 +34,7 @@ const INBOUND_EVENTS: InboundTemplate[] = [
     title: 'Folio payment authorized',
     message: '$3,250.00 received via card for Alexander Hayes',
     meta: 'FOL-2026-8914',
-    navigateTo: '/admin/bookings',
+    navigateTo: '/bookings',
   },
   {
     type: 'payment',
@@ -42,7 +42,7 @@ const INBOUND_EVENTS: InboundTemplate[] = [
     title: 'Partial deposit collected',
     message: '$500.00 deposit taken for David Zhang stay',
     meta: 'FOL-2026-8840',
-    navigateTo: '/admin/bookings',
+    navigateTo: '/bookings',
   },
   {
     type: 'housekeeping',
@@ -64,7 +64,7 @@ const INBOUND_EVENTS: InboundTemplate[] = [
     title: 'RFID keycard encoded',
     message: 'Key 2 of 2 encoded for Room 201 · David Zhang',
     meta: 'RFID-K201-7742',
-    navigateTo: '/admin/bookings',
+    navigateTo: '/bookings',
   },
   {
     type: 'service',
@@ -72,7 +72,7 @@ const INBOUND_EVENTS: InboundTemplate[] = [
     title: 'Urgent room service order',
     message: 'Sir Arthur Stirling ordered late-night dining (Diamond VIP)',
     meta: 'ORD-5890',
-    navigateTo: '/admin/services',
+    navigateTo: '/services',
   },
   {
     type: 'service',
@@ -80,7 +80,7 @@ const INBOUND_EVENTS: InboundTemplate[] = [
     title: 'Spa reservation confirmed',
     message: 'Sophia Loren · 60-min Deep Tissue · 04:00 PM',
     meta: 'ORD-5891',
-    navigateTo: '/admin/services',
+    navigateTo: '/services',
   },
 ];
 

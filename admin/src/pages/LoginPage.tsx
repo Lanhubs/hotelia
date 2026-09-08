@@ -41,7 +41,7 @@ export const LoginPage: React.FC = () => {
     setTimeout(async () => {
       setIsLoading(false);
       const success = await login(email, selectedRole, shift, password);
-      if (success) { navigate('/admin/dashboard'); } else { setErrorMessage('Invalid credentials.'); }
+      if (success) { navigate('/dashboard'); } else { setErrorMessage('Invalid credentials.'); }
     }, 600);
   };
 
@@ -53,7 +53,7 @@ export const LoginPage: React.FC = () => {
     setTimeout(async () => {
       setIsLoading(false);
       await login(targetEmail, role, targetShift, targetPassword);
-      navigate('/admin/dashboard');
+      navigate('/dashboard');
     }, 400);
   };
 

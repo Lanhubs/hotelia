@@ -1,7 +1,28 @@
+import { Jwt } from 'hono/jwt'
 import authRepository from "../repositories/authRepository"
+import { config } from "../config"
 import { UnauthorizedError } from "../types/errorTypes"
 
 class AuthService {
+  // Generate JWT token
+  async generateToken(user: { id: string; role: string; permissions: string[] }) {
+    const payload = {
+      sub: user.id,
+      role: user.role,
+      permissions: user.permissions,
+    }
+    return await Jwt.sign(payload, config.jwtSecret, { expiresIn: '24h' })
+  }
+
+  // Verify JWT token
+  async verifyToken(token: string) {
+    try {
+      return await Jwt.verify(token, config.jwtSecret)
+    } catch {
+      return null
+    }
+  }
+
   async login(email: string, password: string) {
     const user = await authRepository.findUserByEmail(email)
     
@@ -16,8 +37,15 @@ class AuthService {
 
     await authRepository.updateLastLogin(user.id)
 
+    // Generate JWT token
+    const token = await this.generateToken({
+      id: user.id,
+      role: user.role,
+      permissions: user.permissions,
+    })
+
     return {
-      token: user.id,
+      token,
       user: {
         id: user.id,
         name: user.name,

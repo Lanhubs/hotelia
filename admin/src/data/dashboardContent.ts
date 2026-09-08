@@ -58,17 +58,17 @@ export const KPI_DATA: KPIData[] = [
   {
     title: 'Occupancy Rate', icon: 'occupancy', mainValue: 280, mainUnit: '/500 Rooms', highlightText: '56.0% current fill rate', highlightIcon: 'trending',
     stats: [{ label: 'Booked Rooms', value: 220, icon: 'bed', iconColor: 'text-indigo-500' }, { label: 'Cancelled Rooms', value: 24, icon: 'x', iconColor: 'text-rose-500' }],
-    linkText: 'View All Bookings', linkTo: '/admin/reservations',
+    linkText: 'View All Bookings', linkTo: '/reservations',
   },
   {
     title: 'Arrivals & Departures', icon: 'travel', mainValue: 50, subtitle: 'Total transfers scheduled',
     stats: [{ label: 'Scheduled Check-outs', value: 24, icon: 'arrowUp', iconColor: 'text-rose-500' }, { label: 'Scheduled Check-ins', value: 26, icon: 'check', iconColor: 'text-emerald-500' }],
-    linkText: 'Dispatch Travel Trip', linkTo: '/admin/travel',
+    linkText: 'Dispatch Travel Trip', linkTo: '/travel',
   },
   {
     title: 'Culinary & Catering', icon: 'catering', mainValue: 250, highlightText: '22 active in kitchen station', highlightIcon: 'sparkles',
     stats: [{ label: 'Culinary Revenue', value: 86500, icon: 'dollar', iconColor: 'text-emerald-600' }, { label: 'Orders Completed', value: 228, icon: 'check', iconColor: 'text-indigo-500' }],
-    linkText: 'Open Kitchen Board', linkTo: '/admin/services',
+    linkText: 'Open Kitchen Board', linkTo: '/services',
   },
 ];
 

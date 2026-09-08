@@ -25,15 +25,15 @@ export const Topbar: React.FC<TopbarProps> = () => {
   const getPageTitle = () => {
     const path = location.pathname.replace('/admin/', '');
     if (!path || path === 'dashboard') return 'Dashboard';
-    if (path === 'bookings' || path === 'reservations') return 'Reservations';
-    if (path === 'accommodation') return 'Accommodation';
-    if (path === 'travel') return 'Travel Concierge';
-    if (path === 'services' || path === 'catering') return 'Services';
-    if (path === 'revenue' || path === 'reports') return 'Revenue';
-    if (path === 'transactions' || path === 'accounting') return 'Accounting ';
-    if (path === 'cashbooks') return 'Cash Books';
-    if (path === 'settings') return 'Property Configuration';
-    if (path === 'help') return 'Support & Staff Documentation';
+    if (path.includes('bookings') || path === 'reservations') return 'Reservations';
+    if (path.includes('accommodation')) return 'Accommodation';
+    if (path.includes('travel')) return 'Travel Concierge';
+    if (path.includes('services') || path === 'catering') return 'Services';
+    if (path.includes('revenue' )|| path === 'reports') return 'Revenue';
+    if (path.includes('transactions') || path === 'accounting') return 'Accounting ';
+    if (path.includes('cashbooks')) return 'Cash Books';
+    if (path.includes('settings')) return 'Property Configuration';
+    if (path.includes('help')) return 'Support & Staff Documentation';
     return path.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   };
 

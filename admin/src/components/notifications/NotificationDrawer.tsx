@@ -178,7 +178,7 @@ export const NotificationDrawer: React.FC = () => {
             type="button"
             onClick={() => {
               setDrawerOpen(false);
-              navigate('/admin/activity');
+              navigate('/activity');
             }}
             className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-100 text-zinc-700 text-xs font-bold transition-colors cursor-pointer"
           >

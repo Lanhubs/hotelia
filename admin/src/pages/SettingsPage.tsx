@@ -40,7 +40,7 @@ export const SettingsPage: React.FC = () => {
         message: `Updated settings for ${formState.propertyName || 'KeoExperience Luxury Hotel'} across cluster.`,
         meta: 'CONFIG',
         source: 'action',
-        navigateTo: '/admin/settings',
+        navigateTo: '/settings',
       });
       setTimeout(() => setSaved(false), 2500);
     } catch {

@@ -1,4 +1,6 @@
 import { Context } from 'hono'
+import { Jwt } from 'hono/jwt'
+import { config } from './config'
 
 export interface AuthenticatedRequest extends Context {
   var: {
@@ -16,19 +18,18 @@ export async function authMiddleware(c: Context, next: () => Promise<void>) {
 
   const token = authHeader.split(' ')[1]
   try {
-    const db = (await import('./database')).getDatabase()
-    const user = await db.queryOne<{ id: string; role: string; permissions: string[] }>(
-      'SELECT id, role, permissions FROM staff_users WHERE id = $1 AND is_active = true',
-      [token]
-    )
-
-    if (!user) {
+    // Verify JWT token using hono/jwt
+    const payload = await Jwt.verify(token, config.jwtSecret)
+    
+    if (!payload || !payload.sub) {
       return c.json({ error: 'Unauthorized' }, 401)
     }
 
-    c.set('userId', user.id)
-    c.set('userRole', user.role)
-    c.set('userPermissions', user.permissions)
+    // Set user info in context
+    c.set('userId', payload.sub as string)
+    c.set('userRole', payload.role as string)
+    c.set('userPermissions', payload.permissions as string[])
+    
     await next()
   } catch (error) {
     return c.json({ error: 'Invalid token' }, 401)

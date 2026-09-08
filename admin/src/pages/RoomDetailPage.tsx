@@ -42,7 +42,7 @@ export const RoomDetailPage: React.FC = () => {
   };
 
   const handleBookNow = () => {
-    navigate(`/admin/accommodation/${currentRoom.id}/book?checkIn=${encodeURIComponent(checkInDate)}&checkOut=${encodeURIComponent(checkOutDate)}&guests=${encodeURIComponent(guestsCount)}`);
+    navigate(`/accommodation/${currentRoom.id}/book?checkIn=${encodeURIComponent(checkInDate)}&checkOut=${encodeURIComponent(checkOutDate)}&guests=${encodeURIComponent(guestsCount)}`);
   };
 
   if (isLoadingDetail && !apiRoomDetail) {
@@ -56,7 +56,7 @@ export const RoomDetailPage: React.FC = () => {
   return (
     <div className="space-y-4 pb-14">
       <div className="flex items-center justify-between px-1">
-        <Link to="/admin/accommodation" className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-500 hover:text-ink transition-colors group">
+        <Link to="/accommodation" className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-500 hover:text-ink transition-colors group">
           <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" />
           <span>Back to Hotel Directory</span>
         </Link>
@@ -147,7 +147,7 @@ export const RoomDetailPage: React.FC = () => {
               checkOutDate={checkOutDate} onCheckOutDateChange={setCheckOutDate}
               guestsCount={guestsCount} onGuestsCountChange={setGuestsCount}
               onBookNow={handleBookNow}
-              onExploreMore={() => navigate(`/admin/accommodation/${nextRoom?.id || currentRoom.id}`)}
+              onExploreMore={() => navigate(`/accommodation/${nextRoom?.id || currentRoom.id}`)}
             />
           </div>
         </div>

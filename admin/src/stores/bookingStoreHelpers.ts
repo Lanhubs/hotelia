@@ -9,7 +9,7 @@ export function notifyBookingCreated(newBooking: BookingRecord) {
     message: `${newBooking.guest.name} checked in · Room ${newBooking.room.roomNumber} (${newBooking.room.name}) · ${newBooking.stay.nights} nights`,
     meta: newBooking.folioNumber || newBooking.id,
     source: 'action',
-    navigateTo: '/admin/bookings',
+    navigateTo: '/bookings',
   });
 }
 
@@ -26,7 +26,7 @@ export function notifyStatusUpdated(target: BookingRecord, newStatus: BookingSta
         : `${target.guest.name} · Folio ${target.folioNumber} moved to ${newStatus}`,
     meta: target.folioNumber,
     source: 'action',
-    navigateTo: '/admin/bookings',
+    navigateTo: '/bookings',
   });
 }
 
@@ -38,7 +38,7 @@ export function notifyPaymentRecorded(target: BookingRecord, amount: number, pay
     message: `$${amount.toLocaleString()} collected for ${target.guest.name} · Room ${target.room.roomNumber}`,
     meta: target.folioNumber,
     source: 'action',
-    navigateTo: '/admin/bookings',
+    navigateTo: '/bookings',
   });
 }
 
@@ -50,7 +50,7 @@ export function notifyKeycardIssued(target: BookingRecord, cardUid: string) {
     message: `Key [${cardUid}] encoded & active for Room #${target.room.roomNumber} · ${target.guest.name}`,
     meta: cardUid,
     source: 'action',
-    navigateTo: '/admin/bookings',
+    navigateTo: '/bookings',
   });
 }
 
@@ -62,6 +62,6 @@ export function notifyBookingCancelled(target: BookingRecord, reason?: string) {
     message: `${target.guest.name} · Folio ${target.folioNumber} cancelled${reason ? ` — ${reason}` : ''}`,
     meta: target.folioNumber,
     source: 'action',
-    navigateTo: '/admin/bookings',
+    navigateTo: '/bookings',
   });
 }

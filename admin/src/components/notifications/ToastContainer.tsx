@@ -28,12 +28,21 @@ export const ToastContainer: React.FC<ToastContainerProps> = ({ autoClose = 3000
 
   const [visibleToasts, setVisibleToasts] = useState<Map<string, boolean>>(new Map());
 
-  // Show all unread notifications when component mounts
+  // Show newly arriving unread notifications — only add IDs not already tracked
   useEffect(() => {
-    const map = new Map<string, boolean>();
-    unreadNotifications.forEach((n) => map.set(n.id, true));
-    setVisibleToasts(map);
-  }, [unreadNotifications]);
+    const newIds = unreadNotifications
+      .map((n) => n.id)
+      .filter((id) => !visibleToasts.has(id));
+
+    if (newIds.length === 0) return; // nothing new — avoid re-render loop
+
+    setVisibleToasts((prev) => {
+      const next = new Map(prev);
+      newIds.forEach((id) => next.set(id, true));
+      return next;
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [unreadNotifications.map((n) => n.id).join(',')]); // stable string dep
 
   // Handle toast visibility with auto-close
   useEffect(() => {
@@ -56,7 +65,7 @@ export const ToastContainer: React.FC<ToastContainerProps> = ({ autoClose = 3000
     return () => {
       timerMap.forEach((timer) => clearTimeout(timer));
     };
-  }, [unreadNotifications, autoClose]);
+  }, [unreadNotifications.map((n) => n.id).join(','), autoClose]); // stable string dep
 
   // Clear toast after animation
   useEffect(() => {

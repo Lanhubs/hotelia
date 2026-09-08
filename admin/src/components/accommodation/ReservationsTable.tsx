@@ -40,7 +40,7 @@ export const ReservationsTable: React.FC<ReservationsTableProps> = ({
         </div>
         <div className="flex items-center gap-2">
           <button
-            onClick={() => navigate('/admin/bookings')}
+            onClick={() => navigate('/bookings')}
             className="px-3.5 py-1.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center gap-1.5"
           >
             <span>Open Full Tracking Hub</span>
