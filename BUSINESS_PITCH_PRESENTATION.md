@@ -1,5 +1,5 @@
 # KEO Hotel Management System
-## ₦1 Million Investment for ₦8+ Million Returns
+## ₦850,000 Investment for ₦8+ Million Returns
 
 ---
 
@@ -7,9 +7,9 @@
 
 Your hotel loses millions annually to booking site commissions and outdated systems. **KEO transforms your operations with 810% Return on Investment (ROI) in year one**.
 
-**Investment**: ₦1,000,000  
+**Investment**: ₦850,000 *(includes deployment & go-live)*  
 **Year 1 Returns**: ₦8,100,000+  
-**Payback**: 45 days
+**Payback**: 38 days
 
 ---
 
@@ -25,7 +25,7 @@ Your hotel loses millions annually to booking site commissions and outdated syst
 - **Staff Efficiency**: ₦1,800,000 (30% faster operations = 2 fewer Full-Time Employees needed)
 - **System Consolidation**: ₦800,000 (replace multiple vendors with one platform)
 
-**Total Benefit**: ₦9,700,000 vs ₦1,000,000 investment = **970% ROI**
+**Total Benefit**: ₦9,700,000 vs ₦850,000 investment = **1,041% ROI**
 
 ---
 
@@ -77,10 +77,14 @@ Your hotel loses millions annually to booking site commissions and outdated syst
 
 ## 💪 Competitive Edge
 
-### vs Manual Systems
-- **90% faster check-in** (digital vs paper)
-- **Zero accounting errors** (automated vs manual)
-- **40% more reservations** (24/7 online vs phone-only)
+### vs Current Hotel Practices in Nigeria
+| **Major Hotels' Problems** | **KEO Solution** | **Your Advantage** |
+|---|---|---|
+| **Sheraton/Hilton**: 25% Online Travel Agency fees | Direct booking system | Keep 100% of revenue |
+| **Lagos Continental**: Manual check-in delays | Digital 90% faster check-in | Superior guest experience |
+| **Ilorin hotels**: Phone-only bookings | 24/7 online reservations | Capture international guests |
+| **Most hotels**: Separate payment systems | Integrated Paystack processing | Seamless transactions |
+| **Industry standard**: No service analytics | Real-time revenue tracking | Data-driven decisions |
 
 ### vs International Software
 - **Nigerian-optimized** (Paystack, Naira pricing)
@@ -110,37 +114,69 @@ Your hotel loses millions annually to booking site commissions and outdated syst
 
 ---
 
-## 📊 Market Leadership
+## 📊 Market Reality: Nigerian Hotels Losing Millions
 
-- **85% of luxury Nigerian hotels** still use manual systems
-- **₦15 billion lost annually** to Online Travel Agency commissions industry-wide
-- **First-mover advantage** in integrated hotel technology
-- **Premium positioning** through technology excellence
+**Current Industry Problem**:
+- **Sheraton Abuja** pays 20-25% commission to Booking.com for every reservation
+- **Lagos Continental Hotel** relies entirely on Expedia and Hotels.com for online bookings
+- **Ilorin's Kwara Hotel** has no direct booking system - guests must call or use third-party sites
+- **Four Points by Sheraton Lagos** loses ₦40M+ annually to Online Travel Agency commissions
+-  **Starwood Hotel** loses some millions of naira to a third party booking system because of improperly setup web platform
+
+
+**In Ilorin Specifically**:
+- **Precious Palm Royal Hotel** depends 100% on Booking.com and walk-ins
+- **Best Western Plus Kibo Palace** has basic website but no online booking
+- **Ancilla Hotel** relies on phone bookings and manual management
+- **Summit Hotel** uses WhatsApp and calls - no integrated system
+
+**The Cost**: Nigerian hotels collectively lose **₦15 billion annually** to third-party platforms while struggling with:
+- Manual room management
+- Separate payment systems  
+- No revenue analytics
+- Poor guest data control
+- Limited upselling capabilities
+
+**Your Opportunity**: Be the **first hotel in Kwara State** with fully integrated booking and management technology.
 
 ---
 
 ## 🎯 Why Act Now
 
 **Monthly cost of waiting**:
-- ₦675,000 in Online Travel Agency commission losses
-- ₦250,000 in operational inefficiencies  
-- ₦150,000 in missed service revenue
+- ₦675,000 in Online Travel Agency commission losses (like Sheraton Abuja pays)
+- ₦250,000 in operational inefficiencies (manual systems like Ilorin hotels use)
+- ₦150,000 in missed service revenue (no integrated upselling like Lagos Continental)
 - **₦1,075,000 total monthly opportunity cost**
+
+**While you wait, competitors in Lagos are already losing millions to Booking.com and Expedia. Don't let Ilorin hotels fall further behind.**
 
 ---
 
 ## 🤝 Investment Details
 
 ### You Get:
-- Complete production system (tested, secure)
-- Full training and deployment (operational in 1 week)
-- Ongoing support and updates
+- Complete production system (tested, secure, fully deployed)
+- Full staff training and go-live support (operational in 1 week)
+- Ongoing support, maintenance, and feature updates
 - Performance guarantees
 
-### You Invest:
-- ₦1,000,000 (one-time, no recurring fees)
-- 2-3 days staff training time
-- System migration support
+### Investment Breakdown — ₦850,000 Total
+
+| Item | Cost |
+|---|---|
+| **Core System Development** *(booking engine, admin dashboard, payments)* | ₦550,000 |
+| **Deployment & Hosting Setup** *(cloud server, domain, SSL, CI/CD pipeline)* | ₦150,000 |
+| **Staff Training & Go-Live Support** *(2–3 days on-site/remote)* | ₦80,000 |
+| **First Year Maintenance & Updates** *(bug fixes, feature patches)* | ₦70,000 |
+| **Total** | **₦850,000** |
+
+> 💡 *No recurring licensing fees. Hosting renews from Year 2 at approximately ₦120,000/year depending on traffic.*
+
+### You Provide:
+- 2-3 days staff availability for training
+- Hotel branding assets (logo, colours, photos)
+- Domain name preference (we handle registration)
 
 ### 90-Day Success Targets:
 - 25% increase in direct bookings
@@ -153,24 +189,43 @@ Your hotel loses millions annually to booking site commissions and outdated syst
 ## ✅ The Decision
 
 **KEO Hotel Management System**:
-- **Immediate returns**: 970% Return on Investment Year 1
+- **Immediate returns**: 1,041% Return on Investment Year 1
 - **Market leadership** through technology
 - **Scalable growth** foundation
 - **Future-ready** platform
 
-**Investment**: ₦1,000,000  
+**Investment**: ₦850,000 *(deployment included)*  
 **Returns**: ₦9,700,000+ (Year 1)  
 **Impact**: Nigerian hospitality market leadership
 
 ---
 
 ### Next Steps:
-1. Live system demonstration (30 minutes)
-2. Customized financial projections
-3. Deployment timeline
-4. Contract and launch
 
-**Ready for deployment in 48 hours**
+#### Phase 1 — Immediate (Included in ₦850,000)
+1. **Live system demonstration** (30-minute walkthrough of all live features)
+2. **Contract signing & customisation brief** (branding, room config, pricing)
+3. **Deployment to production** (cloud hosting, domain, SSL certificate)
+4. **Staff onboarding & training** (front desk, management, admin roles)
+5. **Go-live & handover** (fully operational within 1 week)
+
+#### Phase 2 — Upcoming Features *(Post-Launch Roadmap)*
+The following modules are already scoped into the system architecture and will be delivered as updates:
+
+6. **Staff Management Module** — Full HR panel: staff profiles, shift scheduling, role assignments, PIN-based lock screen access, attendance tracking, and payroll exports
+7. **Events & Conference Management** — Upload and manage hotel events (conferences, weddings, private dining), ticketing, capacity control, and event-linked room block bookings
+8. **Guest CRM & Loyalty System** — Returning guest recognition, booking history, preference profiles, and personalised offers for repeat visitors
+9. **Housekeeping Dispatch Board** — Real-time room status workflow (Dirty → Cleaning → Inspected → Available) with staff assignment and turnaround tracking
+10. **Advanced Calendar & Availability Grid** — Full property occupancy calendar with drag-to-book, block-out dates, seasonal pricing periods, and visual room map
+11. **Kitchen & Restaurant POS Integration** — In-restaurant ordering linked to guest folios with table management, kitchen ticket printing, and course tracking
+12. **Maintenance Request Tracker** — Log, assign, and resolve room maintenance issues with photo uploads and escalation alerts
+13. **OTA Channel Manager** — Sync room availability with Booking.com, Airbnb, and Expedia from a single dashboard to eliminate double-bookings
+14. **Multi-Property Support** — Manage multiple hotel branches or properties from one admin account
+15. **Mobile Staff App** — Lightweight mobile interface for housekeeping, concierge, and front desk staff on the go
+
+> 📌 *Phases 2 features are delivered via ongoing support updates. Priority and timeline will be agreed post-launch based on operational needs.*
+
+**Ready for deployment in 48 hours after contract signing.**
 
 ---
 
