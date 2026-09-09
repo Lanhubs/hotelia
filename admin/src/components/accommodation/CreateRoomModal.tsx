@@ -80,7 +80,7 @@ export const CreateRoomModal: React.FC<CreateRoomModalProps> = ({ onClose, onSub
       const createdRoom = await createRoom(roomData);
       
       // Call the optional onSubmit callback if provided (for backward compatibility)
-      onSubmit?.(roomData);
+      onSubmit?.(roomData as any);
 
       // Close the modal on success
       onClose();
