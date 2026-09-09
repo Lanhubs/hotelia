@@ -1,5 +1,6 @@
 export interface AccommodationRoom {
   id: string;
+  slug?: string;
   name: string;
   tagline: string;
   location: string;

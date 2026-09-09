@@ -1,20 +1,19 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   build: {
-      outDir: '../api/public/landing',
-    },
-  plugins: [
-    tailwindcss(),
-    react()],
+    outDir: "../api/public/landing",
+  },
+  plugins: [tailwindcss(), react()],
   server: {
     proxy: {
-      '/api': {
-        target: 'http://localhost:8080',
+      "/api": {
+        target: "http://localhost:10000",
+
         changeOrigin: true,
       },
     },
   },
-})
+});

@@ -18,7 +18,7 @@ export const WalkInQuickAction: React.FC = () => {
       </p>
 
       <Link
-        to="/admin/accommodation"
+        to="/accommodation"
         className="w-full py-2.5 px-4 bg-ink hover:bg-[#4338CA] text-white rounded-xl text-xs font-bold text-center block transition-all shadow-xs cursor-pointer"
       >
         + Create Reception Walk-In Reservation

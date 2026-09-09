@@ -52,6 +52,9 @@ class BookingService {
   async createPublicBooking(payload: CreateBookingPayload, idempotencyKey?: string): Promise<PublicBooking> {
     const db = getDatabase()
 
+    // Use slug as ID if ID is null/undefined
+    const roomId = payload.room.id || payload.room.slug
+
     if (idempotencyKey) {
       const ik = await db.queryOne<{ response: any }>(
         `SELECT response FROM idempotency_keys WHERE key = $1`,
@@ -86,19 +89,20 @@ class BookingService {
         discount_amount, total_amount, amount_paid, balance_due,
         currency, payment_status, payment_method
       ) VALUES (
-        $1,$2,'Online Booking','online','Direct Website',
-        $3,$4,$5,$6,'Standard',
-        $7,$8,$9,$10,$11,
-        $12,$13,$14,$15,$16,
-        $17,$18,$19,$20,$21,
-        0,$22,0,$22,'NGN','pending',null
+        $1, $2, 'Online Booking', 'online', 'Direct Website',
+        $3, $4, $5, $6, 'Standard',
+        $7, $8, $9, $10, $11,
+        $12, $13, $14, $15, $16,
+        $17, $18, $19, $20, $21,
+        0, $22, 0, $23, 'NGN', 'pending', 'pay_at_hotel'
       ) RETURNING *`,
       [
         reference, folioNumber,
         payload.guest.fullName, payload.guest.email, payload.guest.phone, payload.guest.specialRequest,
-        payload.room.id, payload.room.name, payload.room.slug, payload.room.category, payload.room.image,
+        roomId, payload.room.name, payload.room.slug, payload.room.category, payload.room.image,
         payload.search.checkIn, payload.search.checkOut, nights, payload.search.adults, payload.search.children,
-        rateNGN, roomTotal, taxAmount, serviceCharge, extrasTotal, totalAmount,
+        rateNGN, roomTotal, taxAmount, serviceCharge, extrasTotal, 
+        totalAmount, totalAmount,  // Send totalAmount twice - once for total_amount, once for balance_due
       ]
     ) as any
 

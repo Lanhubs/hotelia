@@ -1,23 +1,23 @@
-import { Jwt } from 'hono/jwt'
+import jwt from 'jsonwebtoken'
 import authRepository from "../repositories/authRepository"
 import { config } from "../config"
 import { UnauthorizedError } from "../types/errorTypes"
 
 class AuthService {
   // Generate JWT token
-  async generateToken(user: { id: string; role: string; permissions: string[] }) {
+  generateToken(user: { id: string; role: string; permissions: string[] }): string {
     const payload = {
       sub: user.id,
       role: user.role,
       permissions: user.permissions,
     }
-    return await Jwt.sign(payload, config.jwtSecret, { expiresIn: '24h' })
+    return jwt.sign(payload, config.jwtSecret, { expiresIn: '24h' })
   }
 
   // Verify JWT token
-  async verifyToken(token: string) {
+  verifyToken(token: string): jwt.JwtPayload | null {
     try {
-      return await Jwt.verify(token, config.jwtSecret)
+      return jwt.verify(token, config.jwtSecret) as jwt.JwtPayload
     } catch {
       return null
     }

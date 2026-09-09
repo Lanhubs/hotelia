@@ -16,6 +16,7 @@ export const CREATE_ROOMS_TABLE = `
     size INTEGER NOT NULL,
     floor TEXT NOT NULL,
     units INTEGER NOT NULL DEFAULT 1,
+    room_numbers TEXT DEFAULT '[]',
     image TEXT,
     gallery TEXT,
     video_url TEXT,

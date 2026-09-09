@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Seo } from '../components/seo/Seo'
 import { CheckoutLayout } from '../components/booking/CheckoutLayout'
@@ -19,6 +20,18 @@ export function ExtrasStepPage() {
   const guest = useCheckoutStore((s) => s.guest)
   const setBooking = useCheckoutStore((s) => s.setBooking)
   const createBooking = useCreateBooking()
+  const [error, setError] = useState<string | null>(null)
+
+  // Redirect if required data is missing
+  if (!room || !search) {
+    navigate('/booking/review')
+    return null
+  }
+  
+  if (!guest.email?.trim() || !guest.fullName?.trim()) {
+    navigate('/booking/guest')
+    return null
+  }
 
   const toggle = (id: string) => {
     const exists = selected.some((e) => e.id === id)
@@ -32,10 +45,36 @@ export function ExtrasStepPage() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!room || !search) return
-    const booking = await createBooking.mutateAsync({ search, room, guest, extras: selected })
-    setBooking(booking)
-    navigate('/booking/payment')
+    setError(null)
+    
+    if (!room) {
+      setError('No room selected. Please go back and select a room.')
+      return
+    }
+    
+    if (!room.id && !room.slug) {
+      setError('Room information is incomplete (missing ID and slug). Please go back and select a room again.')
+      return
+    }
+    
+    if (!search) {
+      setError('No search dates selected. Please go back and select dates.')
+      return
+    }
+    
+    if (!guest.email?.trim() || !guest.fullName?.trim()) {
+      setError('Guest information is incomplete. Please go back and fill in your details.')
+      return
+    }
+    
+    try {
+      const booking = await createBooking.mutateAsync({ search, room, guest, extras: selected })
+      setBooking(booking)
+      navigate('/booking/payment')
+    } catch (error: any) {
+      console.error('Booking creation failed:', error)
+      setError(error?.message || 'Failed to create booking. Please try again.')
+    }
   }
 
   return (
@@ -49,6 +88,11 @@ export function ExtrasStepPage() {
           </p>
 
           <form onSubmit={submit} className="mt-8 space-y-4">
+            {error && (
+              <div className="rounded border border-red-300 bg-red-50 p-4 text-sm text-red-800">
+                {error}
+              </div>
+            )}
             {isLoading ? (
               <div className="grid gap-4 sm:grid-cols-2">
                 {Array.from({ length: 4 }).map((_, i) => (

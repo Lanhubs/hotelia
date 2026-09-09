@@ -81,7 +81,7 @@ export const RoomCardListView: React.FC<RoomCardListViewProps> = ({
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <div className="flex items-center gap-2">
-                <h3 onClick={() => navigate(`/admin/accommodation/${room.id}`)} className="text-base font-bold text-zinc-900 group-hover:text-ink cursor-pointer">{room.name}</h3>
+                <h3 onClick={() => navigate(`/accommodation/${room.id}`)} className="text-base font-bold text-zinc-900 group-hover:text-ink cursor-pointer">{room.name}</h3>
                 <span className="px-2 py-0.5 rounded-md bg-[#EEF2FF] text-ink text-[10px] font-bold">Floor {room.floor}</span>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-zinc-500 font-medium mt-0.5">
@@ -137,7 +137,7 @@ export const RoomCardListView: React.FC<RoomCardListViewProps> = ({
             </div>
 
             <div className="flex items-center gap-2">
-              <button type="button" onClick={() => navigate(`/admin/accommodation/${room.id}`)} className="px-3 py-2 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 text-xs font-semibold text-zinc-700 flex items-center gap-1 cursor-pointer">
+              <button type="button" onClick={() => navigate(`/accommodation/${room.id}`)} className="px-3 py-2 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 text-xs font-semibold text-zinc-700 flex items-center gap-1 cursor-pointer">
                 <Eye className="w-3.5 h-3.5 text-zinc-400" />
                 <span>Inspect</span>
               </button>
@@ -147,7 +147,7 @@ export const RoomCardListView: React.FC<RoomCardListViewProps> = ({
                   <span>Quick Walk-In</span>
                 </button>
               )}
-              <button type="button" onClick={() => navigate(`/admin/accommodation/${room.id}/book`)} className="px-4 py-2 rounded-lg bg-ink hover:bg-[#4338CA] text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+              <button type="button" onClick={() => navigate(`/accommodation/${room.id}/book`)} className="px-4 py-2 rounded-lg bg-ink hover:bg-[#4338CA] text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>Book Suite</span>
               </button>

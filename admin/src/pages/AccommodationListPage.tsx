@@ -49,17 +49,11 @@ export const AccommodationListPage: React.FC = () => {
       });
   }, [rooms, searchQuery, selectedCategory, statusFilter, sortBy]);
 
-  const handleCreateRoomSubmit = async (roomData: Partial<AccommodationRoom>) => {
-    try {
-      await createRoom(roomData);
-      setIsCreateModalOpen(false);
-      setNotificationMsg(`Suite "${roomData.name}" has been successfully added to executive catalog.`);
-      setTimeout(() => setNotificationMsg(null), 5000);
-    } catch {
-      setIsCreateModalOpen(false);
-      setNotificationMsg(`Suite created.`);
-      setTimeout(() => setNotificationMsg(null), 3000);
-    }
+  const handleCreateRoomSubmit = (roomData: Partial<AccommodationRoom>) => {
+    // The CreateRoomModal now handles the API call directly
+    // This callback is just for showing success message
+    setNotificationMsg(`Suite "${roomData.name}" has been successfully added to executive catalog.`);
+    setTimeout(() => setNotificationMsg(null), 5000);
   };
 
   const handleEditRoomSubmit = async (id: string, updatedData: Partial<AccommodationRoom>) => {

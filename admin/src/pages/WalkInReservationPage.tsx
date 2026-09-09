@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { LUXURY_ROOMS, AccommodationRoom } from '../data/accommodationData';
 import { useBookingStore } from '../stores/bookingStore';
@@ -23,7 +23,12 @@ export const WalkInReservationPage: React.FC = () => {
   const { rooms: apiRooms } = useRoomsApi();
 
   const allRooms: AccommodationRoom[] = apiRooms && apiRooms.length > 0 ? apiRooms : LUXURY_ROOMS;
-  const currentRoom: AccommodationRoom = apiRoomDetail || allRooms.find((r) => r.id === roomId || r.slug === roomId) || LUXURY_ROOMS[0] || { roomNumbers: ['401'] } as any;
+  const currentRoom: AccommodationRoom = apiRoomDetail || allRooms.find((r) => r.id === roomId || r.slug === roomId) || LUXURY_ROOMS[0];
+
+  // Ensure room has roomNumbers array
+  if (currentRoom && (!currentRoom.roomNumbers || currentRoom.roomNumbers.length === 0)) {
+    currentRoom.roomNumbers = [`${currentRoom.floor || '4'}01`];
+  }
 
   const initialCheckIn = searchParams.get('checkIn') || '13/6/2026';
   const initialCheckOut = searchParams.get('checkOut') || '15/6/2026';
@@ -39,7 +44,10 @@ export const WalkInReservationPage: React.FC = () => {
   const [checkInDate, setCheckInDate] = useState(initialCheckIn);
   const [checkOutDate, setCheckOutDate] = useState(initialCheckOut);
   const [nightsCount, setNightsCount] = useState(2);
-  const [selectedRoomNumber, setSelectedRoomNumber] = useState(() => currentRoom?.roomNumbers?.[0] || '401');
+  const [selectedRoomNumber, setSelectedRoomNumber] = useState(() => {
+    const roomNumbers = currentRoom?.roomNumbers || [];
+    return roomNumbers.length > 0 ? roomNumbers[0] : '401';
+  });
   const [currency, setCurrency] = useState<'USD' | 'NGN'>('USD');
   const [paymentMethod, setPaymentMethod] = useState<WalkInPaymentMethod>('card');
   const [specialRequests, setSpecialRequests] = useState('VIP Walk-in. High floor preference.');
@@ -51,8 +59,15 @@ export const WalkInReservationPage: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [confirmedBooking, setConfirmedBooking] = useState<any | null>(null);
 
-  const priceUSD = currentRoom?.pricePerNight || currentRoom?.price_per_night || 250;
-  const priceNGN = currentRoom?.priceNairaPerNight || currentRoom?.price_naira_per_night || (priceUSD * 1600);
+  // Update selected room number when currentRoom changes
+  useEffect(() => {
+    if (currentRoom?.roomNumbers && currentRoom.roomNumbers.length > 0) {
+      setSelectedRoomNumber(currentRoom.roomNumbers[0]);
+    }
+  }, [currentRoom]);
+
+  const priceUSD = currentRoom?.pricePerNight || currentRoom?.pricePerNight || 250;
+  const priceNGN = currentRoom?.priceNairaPerNight || currentRoom?.priceNairaPerNight || (priceUSD * 1600);
 
   const baseRateUSD = priceUSD * nightsCount;
   const baseRateNGN = priceNGN * nightsCount;
@@ -103,8 +118,8 @@ export const WalkInReservationPage: React.FC = () => {
               checkInDate={checkInDate} onCheckInDateChange={setCheckInDate}
               checkOutDate={checkOutDate} onCheckOutDateChange={setCheckOutDate}
               nightsCount={nightsCount} onNightsChange={setNightsCount}
-              roomNumbers={currentRoom.roomNumbers} selectedRoomNumber={selectedRoomNumber}
-              onSelectedRoomNumberChange={setSelectedRoomNumber} floor={currentRoom.floor}
+              roomNumbers={currentRoom?.roomNumbers || []} selectedRoomNumber={selectedRoomNumber}
+              onSelectedRoomNumberChange={setSelectedRoomNumber} floor={currentRoom?.floor || 4}
             />
 
             <AddOnsSection

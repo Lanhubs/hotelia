@@ -15,7 +15,7 @@ export const config = {
   maxFiles: 5,
   maxFileSize: 5 * 1024 * 1024,
   // Paystack
-  paystackSecretKey: Bun.env.PAYSTACK_SECRET_KEY || '',
+  paystackSecretKey: Bun.env.PAYSTACK_KEY || '',
   paystackBaseUrl: 'https://api.paystack.co',
   // Cloudinary Credentials
   cloudinary: {

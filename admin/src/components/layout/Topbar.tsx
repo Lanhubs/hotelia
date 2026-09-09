@@ -23,8 +23,8 @@ export const Topbar: React.FC<TopbarProps> = () => {
   const isManager = currentUser.role === 'manager' || currentUser.role === 'admin';
 
   const getPageTitle = () => {
-    const path = location.pathname.replace('/admin/', '');
-    if (!path || path === 'dashboard') return 'Dashboard';
+    const path = location.pathname/* .replace('/admin/', '') */;
+    if (!path || path.includes ('dashboard')) return 'Dashboard';
     if (path.includes('bookings') || path === 'reservations') return 'Reservations';
     if (path.includes('accommodation')) return 'Accommodation';
     if (path.includes('travel')) return 'Travel Concierge';

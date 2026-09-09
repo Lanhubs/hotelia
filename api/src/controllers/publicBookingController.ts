@@ -9,10 +9,16 @@ class PublicBookingController {
       const idempotencyKey = c.req.header('Idempotency-Key') ?? undefined
 
       if (!body.search?.checkIn || !body.search?.checkOut) {
-        return c.json({ error: 'checkIn and checkOut are required' }, 400)
+        return c.json({ error: 'checkIn and checkOut dates are required' }, 400)
       }
-      if (!body.room?.id || !body.guest?.email) {
-        return c.json({ error: 'room and guest are required' }, 400)
+      if (!body.room?.id && !body.room?.slug) {
+        return c.json({ error: 'room ID or slug is required' }, 400)
+      }
+      if (!body.guest?.email?.trim()) {
+        return c.json({ error: 'guest email is required' }, 400)
+      }
+      if (!body.guest?.fullName?.trim()) {
+        return c.json({ error: 'guest full name is required' }, 400)
       }
 
       const booking = await bookingService.createPublicBooking(body, idempotencyKey)

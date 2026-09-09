@@ -7,6 +7,7 @@ import { GuestSelector } from '../booking/GuestSelector'
 import { RoomPrice } from './RoomPrice'
 import { Button, ButtonLink } from '../shared/Button'
 import { useBookingStore } from '../../stores/bookingStore'
+import { useCheckoutStore } from '../../stores/checkoutStore'
 import { isValidRange } from '../../lib/dates'
 
 const included = ['Free cancellation up to 48 hours', 'Complimentary breakfast', 'Pay at the hotel or online']
@@ -15,11 +16,17 @@ export function RoomBookingPanel({ room }: { room: Room }) {
   const navigate = useNavigate()
   const search = useBookingStore((s) => s.search)
   const setSearch = useBookingStore((s) => s.setSearch)
+  const setCheckoutRoom = useCheckoutStore((s) => s.setRoom)
+  const setCheckoutSearch = useCheckoutStore((s) => s.setSearch)
   const [openGuests, setOpenGuests] = useState(false)
   const valid = isValidRange(search.checkIn, search.checkOut)
 
   const book = () => {
     if (!valid) return
+    
+    // Set room and search data in checkout store before navigating
+    setCheckoutRoom(room)
+    setCheckoutSearch(search)
     navigate('/booking/review')
   }
 

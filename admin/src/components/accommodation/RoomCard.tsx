@@ -20,6 +20,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
   onEdit,
   onDelete,
 }) => {
+  
   if (viewMode === 'list') {
     return (
       <RoomCardListView

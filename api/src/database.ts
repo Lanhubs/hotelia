@@ -216,6 +216,16 @@ export async function initDatabase() {
     await db.query(CREATE_EXTRAS_TABLE);
     await db.query(CREATE_IDEMPOTENCY_TABLE);
     await db.query(CREATE_NOTIFICATIONS_TABLE);
+    
+    // Migration: Add room_numbers column if it doesn't exist
+    try {
+      await db.query(`ALTER TABLE rooms ADD COLUMN room_numbers TEXT DEFAULT '[]'`);
+      console.log('Added room_numbers column to rooms table');
+    } catch (error) {
+      // Column already exists or other error - ignore
+      console.log('room_numbers column already exists or migration not needed');
+    }
+    
     await seedStaffUsers(db);
     await seedDefaultRooms(db);
     await db.query(SEED_EXTRAS);

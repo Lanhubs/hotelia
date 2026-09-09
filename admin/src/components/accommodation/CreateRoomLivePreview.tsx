@@ -15,12 +15,14 @@ interface CreateRoomLivePreviewProps {
   tagline: string;
   videoUrl: string;
   galleryCount: number;
+  roomNumbers: string[];
 }
 
 export const CreateRoomLivePreview: React.FC<CreateRoomLivePreviewProps> = ({
   name, category, pricePerNight, priceNairaPerNight, bedrooms, bathrooms, maxGuests,
-  squareMeters, floor, heroImage, tagline, videoUrl, galleryCount
+  squareMeters, floor, heroImage, tagline, videoUrl, galleryCount, roomNumbers
 }) => {
+  const validRoomNumbers = roomNumbers.filter(num => num.trim() !== '');
   return (
     <div className="bg-slate-50/80 rounded-2xl p-4 text-zinc-900 space-y-3.5 border border-slate-200/80 shadow-xs">
       <div className="flex items-center justify-between">
@@ -70,6 +72,26 @@ export const CreateRoomLivePreview: React.FC<CreateRoomLivePreviewProps> = ({
         <div><div className="text-zinc-400">Baths</div><div className="font-bold text-zinc-900 mt-0.5">{bathrooms} Baths</div></div>
         <div><div className="text-zinc-400">Capacity</div><div className="font-bold text-zinc-900 mt-0.5">Max {maxGuests}</div></div>
       </div>
+
+      {/* Room Numbers Preview */}
+      {validRoomNumbers.length > 0 && (
+        <div className="bg-white rounded-xl p-3 border border-zinc-200/80 shadow-2xs">
+          <div className="text-[10px] text-zinc-400 uppercase font-semibold mb-1.5">Available Room Numbers</div>
+          <div className="flex flex-wrap gap-1">
+            {validRoomNumbers.map((roomNum, index) => (
+              <span 
+                key={index}
+                className="px-2 py-1 bg-emerald-50 text-emerald-700 rounded-md text-[10px] font-bold border border-emerald-200"
+              >
+                #{roomNum}
+              </span>
+            ))}
+          </div>
+          <div className="text-[10px] text-zinc-500 mt-1.5">
+            {validRoomNumbers.length} room{validRoomNumbers.length !== 1 ? 's' : ''} ready for walk-in reservations
+          </div>
+        </div>
+      )}
 
       <div className="pt-2 border-t border-zinc-200/80 flex items-center justify-between">
         <div>

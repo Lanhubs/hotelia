@@ -4,14 +4,17 @@ import { AccommodationRoom } from '../../data/accommodationData';
 import { CreateRoomSpecsStep } from './CreateRoomSpecsStep';
 import { CreateRoomMediaStep } from './CreateRoomMediaStep';
 import { CreateRoomLivePreview } from './CreateRoomLivePreview';
+import { useRoomsApi } from '../../hooks/useRoomsApi';
 
 interface CreateRoomModalProps {
   onClose: () => void;
-  onSubmit: (roomData: Partial<AccommodationRoom>) => void;
+  onSubmit?: (roomData: Partial<AccommodationRoom>) => void;
 }
 
 export const CreateRoomModal: React.FC<CreateRoomModalProps> = ({ onClose, onSubmit }) => {
   const [activeStudioTab, setActiveStudioTab] = useState<'specs' | 'media'>('specs');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { createRoom } = useRoomsApi();
 
   const [name, setName] = useState('');
   const [category, setCategory] = useState('Ocean Villa');
@@ -25,6 +28,7 @@ export const CreateRoomModal: React.FC<CreateRoomModalProps> = ({ onClose, onSub
   const [floor, setFloor] = useState<number>(3);
   const [squareMeters, setSquareMeters] = useState<number>(95);
   const [bedType, setBedType] = useState('Super King Bed');
+  const [roomNumbers, setRoomNumbers] = useState<string[]>(['']);
   const [heroImage, setHeroImage] = useState('https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=85&w=1600&h=900');
   const [gallery, setGallery] = useState<string[]>([
     'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=85&w=1600&h=900',
@@ -33,47 +37,61 @@ export const CreateRoomModal: React.FC<CreateRoomModalProps> = ({ onClose, onSub
   ]);
   const [videoUrl, setVideoUrl] = useState('https://vimeo.com/76979871');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
 
-    onSubmit({
-      id: `room-${Date.now()}`,
-      name,
-      category,
-      tagline: tagline || 'Executive Luxury Suite',
-      location,
-      bedrooms,
-      bathrooms,
-      maxGuests,
-      rating: 5.0,
-      reviewsCount: 1,
-      pricePerNight,
-      originalPricePerNight: Math.round(pricePerNight * 1.15),
-      priceNairaPerNight,
-      heroImage,
-      gallery,
-      overview: 'Luxury oceanfront suite featuring private plunge pool, master marble bathroom, and 24/7 dedicated butler service.',
-      amenities: [
-        { id: 'wifi', name: 'Gigabit Wifi', icon: 'wifi', category: 'essentials' },
-        { id: 'tv', name: '75" 4K Smart OLED TV', icon: 'tv', category: 'luxury' },
-        { id: 'utensils', name: '24/7 Butler Service', icon: 'utensils', category: 'dining' },
-      ],
-      houseRules: ['No smoking indoors', 'Check-in: 3:00 PM', 'Check-out: 11:00 AM'],
-      healthSafety: ['Daily Deep Sanitation', 'UV Key Disinfection'],
-      cancellationPolicy: 'Free cancellation up to 48 hours before check-in date.',
-      locationDetails: {
-        address: location,
-        neighborhood: 'Victoria Island Promenade',
-        coordinates: { lat: 6.4281, lng: 3.4219 },
-        nearbyAttractions: ['Ocean Promenade (0.2 km)', 'VIP Helipad (0.5 km)'],
-      },
-      floor,
-      squareMeters,
-      isWalkInReady: true,
-      roomNumbers: [`${floor}0${Math.floor(1 + Math.random() * 8)}`],
-      mealsIncluded: ['Breakfast & Evening Champagne Included'],
-    });
+    setIsSubmitting(true);
+
+    try {
+      // Filter out empty room numbers and ensure at least one exists
+      const validRoomNumbers = roomNumbers.filter(num => num.trim() !== '');
+      if (validRoomNumbers.length === 0) {
+        // Generate a default room number if none provided
+        validRoomNumbers.push(`${floor}01`);
+      }
+
+      const roomData = {
+        name,
+        category,
+        tagline: tagline || 'Executive Luxury Suite',
+        location,
+        bedrooms,
+        bathrooms,
+        maxGuests,
+        pricePerNight,
+        priceNairaPerNight,
+        heroImage,
+        gallery,
+        videoUrl,
+        floor,
+        squareMeters,
+        bedType,
+        roomNumbers: validRoomNumbers,
+        overview: 'Luxury oceanfront suite featuring private plunge pool, master marble bathroom, and 24/7 dedicated butler service.',
+        amenities: [
+          { id: 'wifi', name: 'Gigabit Wifi', icon: 'wifi', category: 'essentials' },
+          { id: 'tv', name: '75" 4K Smart OLED TV', icon: 'tv', category: 'luxury' },
+          { id: 'utensils', name: '24/7 Butler Service', icon: 'utensils', category: 'dining' },
+        ],
+      };
+
+      // Call the API to create the room
+      const createdRoom = await createRoom(roomData);
+      
+      // Call the optional onSubmit callback if provided (for backward compatibility)
+      onSubmit?.(roomData);
+
+      // Close the modal on success
+      onClose();
+      
+    } catch (error) {
+      console.error('Failed to create room:', error);
+      // You could add a toast notification here
+      alert('Failed to create room. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -125,7 +143,7 @@ export const CreateRoomModal: React.FC<CreateRoomModalProps> = ({ onClose, onSub
                 tagline={tagline} setTagline={setTagline} bedrooms={bedrooms} setBedrooms={setBedrooms}
                 bathrooms={bathrooms} setBathrooms={setBathrooms} maxGuests={maxGuests} setMaxGuests={setMaxGuests}
                 floor={floor} setFloor={setFloor} squareMeters={squareMeters} setSquareMeters={setSquareMeters}
-                bedType={bedType} setBedType={setBedType}
+                bedType={bedType} setBedType={setBedType} roomNumbers={roomNumbers} setRoomNumbers={setRoomNumbers}
               />
             ) : (
               <CreateRoomMediaStep
@@ -136,8 +154,12 @@ export const CreateRoomModal: React.FC<CreateRoomModalProps> = ({ onClose, onSub
 
             <div className="flex items-center justify-end gap-2.5 pt-4 border-t border-zinc-100">
               <button type="button" onClick={onClose} className="px-4 py-2 border border-zinc-200 rounded-xl text-xs font-semibold text-zinc-700 hover:bg-zinc-50 cursor-pointer">Cancel</button>
-              <button type="submit" className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-xs cursor-pointer flex items-center gap-1.5">
-                Publish to Catalog
+              <button 
+                type="submit" 
+                disabled={isSubmitting || !name.trim()}
+                className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:bg-zinc-400 disabled:cursor-not-allowed text-white text-xs font-bold shadow-xs cursor-pointer flex items-center gap-1.5"
+              >
+                {isSubmitting ? 'Publishing...' : 'Publish to Catalog'}
               </button>
             </div>
           </div>
@@ -147,6 +169,7 @@ export const CreateRoomModal: React.FC<CreateRoomModalProps> = ({ onClose, onSub
               name={name} category={category} pricePerNight={pricePerNight} priceNairaPerNight={priceNairaPerNight}
               bedrooms={bedrooms} bathrooms={bathrooms} maxGuests={maxGuests} squareMeters={squareMeters}
               floor={floor} heroImage={heroImage} tagline={tagline} videoUrl={videoUrl} galleryCount={gallery.length}
+              roomNumbers={roomNumbers}
             />
           </div>
         </form>

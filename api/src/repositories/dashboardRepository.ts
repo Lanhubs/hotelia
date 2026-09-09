@@ -64,7 +64,7 @@ class DashboardRepository {
             { label: 'Cancelled Rooms', value: 24, icon: 'x', iconColor: 'text-rose-500' },
           ],
           linkText: 'View All Bookings',
-          linkTo: '/admin/reservations',
+          linkTo: '/reservations',
         },
         {
           title: 'Arrivals & Departures',

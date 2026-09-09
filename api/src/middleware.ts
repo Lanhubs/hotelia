@@ -1,5 +1,5 @@
 import { Context } from 'hono'
-import { Jwt } from 'hono/jwt'
+import jwt from 'jsonwebtoken'
 import { config } from './config'
 
 export interface AuthenticatedRequest extends Context {
@@ -18,8 +18,8 @@ export async function authMiddleware(c: Context, next: () => Promise<void>) {
 
   const token = authHeader.split(' ')[1]
   try {
-    // Verify JWT token using hono/jwt
-    const payload = await Jwt.verify(token, config.jwtSecret)
+    // Verify JWT token
+    const payload = jwt.verify(token, config.jwtSecret) as jwt.JwtPayload
     
     if (!payload || !payload.sub) {
       return c.json({ error: 'Unauthorized' }, 401)

@@ -43,9 +43,9 @@ export const RoomDisplay: React.FC<RoomDisplayProps> = ({ filteredRooms, onQuick
 
       {viewMode === 'grid' ? (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {filteredRooms.map((room) => (
+          {filteredRooms.map((room) => {return (
             <RoomCard key={room.id} room={room} displayCurrency="USD" viewMode="grid" onQuickWalkIn={onQuickWalkIn} onEdit={onEdit} onDelete={onDelete} />
-          ))}
+          )})}
         </div>
       ) : (
         <div className="space-y-4">
