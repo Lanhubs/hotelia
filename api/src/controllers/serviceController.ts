@@ -26,6 +26,43 @@ class ServiceController {
     }
   }
 
+  async createMenuItem(c: Context): Promise<Response> {
+    try {
+      const data = await c.req.json()
+      const item = await serviceService.createMenuItem(data)
+      if (!item) {
+        return c.json({ error: "Failed to create menu item" }, 400)
+      }
+      return c.json({ success: true, item }, 201)
+    } catch (error) {
+      return handleApiError(c, error as any)
+    }
+  }
+
+  async updateMenuItem(c: Context): Promise<Response> {
+    try {
+      const id = c.req.param("id") as string
+      const data = await c.req.json()
+      const item = await serviceService.updateMenuItem(id, data)
+      if (!item) {
+        return c.json({ error: "Menu item not found" }, 404)
+      }
+      return c.json({ success: true, item })
+    } catch (error) {
+      return handleApiError(c, error as any)
+    }
+  }
+
+  async deleteMenuItem(c: Context): Promise<Response> {
+    try {
+      const id = c.req.param("id") as string
+      await serviceService.deleteMenuItem(id)
+      return c.json({ success: true, message: "Menu item deleted" })
+    } catch (error) {
+      return handleApiError(c, error as any)
+    }
+  }
+
   async createServiceOrder(c: Context): Promise<Response> {
     try {
       const data = await c.req.json()
