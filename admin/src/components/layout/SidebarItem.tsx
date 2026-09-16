@@ -49,7 +49,7 @@ console.log(pathname)
       <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'gap-2.5 min-w-0'}`}>
         <NavIcon
           name={item.icon}
-          className={`flex-shrink-0 w-4 h-4 transition-transform duration-150 ${
+          className={`shrink-0 w-4 h-4 transition-transform duration-150 ${
             isActive
               ? 'text-ink stroke-[2.2]'
               : 'text-zinc-400 group-hover:text-zinc-700 stroke-[1.8]'
