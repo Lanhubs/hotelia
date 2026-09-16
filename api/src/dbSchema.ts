@@ -87,6 +87,108 @@ export const CREATE_BOOKINGS_TABLE = `
   )
 `;
 
+export const CREATE_SERVICE_MENU_TABLE = `
+  CREATE TABLE IF NOT EXISTS service_menu (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    category TEXT NOT NULL,
+    category_label TEXT NOT NULL,
+    description TEXT,
+    price_usd REAL NOT NULL DEFAULT 0,
+    price_naira REAL,
+    prep_time TEXT,
+    image TEXT,
+    tags TEXT DEFAULT '[]',
+    dietary TEXT DEFAULT '[]',
+    is_popular INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`;
+
+export const SEED_SERVICE_MENU = `
+  INSERT OR IGNORE INTO service_menu (
+    id, name, category, category_label, description, price_usd, price_naira, prep_time, image, tags, dietary, is_popular
+  ) VALUES
+    (
+      'fnb-1',
+      'Wagyu A5 Tenderloin Rossini',
+      'fnb',
+      'In-Room Gourmet Dining',
+      'Seared Japanese Miyazaki Wagyu A5, foie gras, black truffle madeira reduction & potato mousseline.',
+      145, 232000,
+      '25-30 min',
+      'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=600&h=400',
+      '["Signature","Chef Special","Gluten-Free"]',
+      '["Gluten-Free"]',
+      1
+    ),
+    (
+      'fnb-2',
+      'Butter-Poached Maine Lobster Risotto',
+      'fnb',
+      'In-Room Gourmet Dining',
+      'Fresh Maine lobster tail, carnaroli saffron risotto, sweet pea coulis, citrus butter glaze.',
+      88, 140800,
+      '20-25 min',
+      'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&q=80&w=600&h=400',
+      '["Seafood","Fresh Catch"]',
+      '[]',
+      1
+    ),
+    (
+      'fnb-3',
+      'Beluga Caviar & House Blinis',
+      'fnb',
+      'In-Room Gourmet Dining',
+      '30g Royal Beluga caviar, buckwheat blinis, organic egg yolks, shallots, crème fraîche, mother-of-pearl spoon.',
+      195, 312000,
+      '10 min',
+      'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&q=80&w=600&h=400',
+      '["Luxury Selection","VIP Choice"]',
+      '[]',
+      0
+    ),
+    (
+      'fnb-4',
+      'Dom Pérignon Vintage Champagne (750ml)',
+      'fnb',
+      'In-Room Gourmet Dining',
+      'Served on ice in silver bucket with crystal flutes & organic strawberries.',
+      380, 608000,
+      '5 min',
+      'https://images.unsplash.com/photo-1568213816046-0ee1c42bd559?auto=format&fit=crop&q=80&w=600&h=400',
+      '["Champagne","Bar Reserve"]',
+      '[]',
+      1
+    ),
+    (
+      'cat-1',
+      'Private Ocean Villa BBQ & Grill Master',
+      'catering',
+      'Event & Balcony Catering',
+      'Private chef & butler on your terrace: Tiger prawns, lamb cutlets, grilled artichokes, dessert bar.',
+      420, 672000,
+      'Scheduled',
+      'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&q=80&w=600&h=400',
+      '["Private Chef","4 Courses","Villa Exclusive"]',
+      '[]',
+      1
+    ),
+    (
+      'spa-1',
+      'Imperial 24K Gold Rejuvenation Facial (90m)',
+      'spa',
+      'Spa & Wellness Sanctuary',
+      'Cellular regeneration with pure 24-karat gold leaf, hyaluronic serum, lifting jade gua sha ritual.',
+      240, 384000,
+      '90 min',
+      'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=600&h=400',
+      '["Signature Spa","Facial Ritual"]',
+      '[]',
+      1
+    )
+`;
+
 export const CREATE_SERVICE_ORDERS_TABLE = `
   CREATE TABLE IF NOT EXISTS service_orders (
     id TEXT PRIMARY KEY,
@@ -110,6 +212,204 @@ export const CREATE_SERVICE_ORDERS_TABLE = `
     order_notes TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     completed_at DATETIME
+  )
+`;
+
+export const CREATE_EVENTS_TABLE = `
+  CREATE TABLE IF NOT EXISTS events (
+    id TEXT PRIMARY KEY,
+    title TEXT NOT NULL,
+    slug TEXT UNIQUE NOT NULL,
+    description TEXT,
+    event_type TEXT NOT NULL,
+    category TEXT NOT NULL,
+    start_date TEXT NOT NULL,
+    end_date TEXT NOT NULL,
+    start_time TEXT NOT NULL,
+    end_time TEXT NOT NULL,
+    timezone TEXT DEFAULT 'Africa/Lagos',
+    recurrence_rule TEXT,
+    recurrence_end_date TEXT,
+    recurrence_exceptions TEXT,
+    is_recurring INTEGER DEFAULT 0,
+    venue_name TEXT,
+    venue_description TEXT,
+    max_capacity INTEGER,
+    has_tickets INTEGER DEFAULT 0,
+    ticket_tiers TEXT,
+    rsvp_limit INTEGER,
+    booking_opens_at TEXT,
+    booking_closes_at TEXT,
+    requires_approval INTEGER DEFAULT 0,
+    hero_image TEXT,
+    gallery TEXT,
+    tags TEXT,
+    is_featured INTEGER DEFAULT 0,
+    is_published INTEGER DEFAULT 1,
+    status TEXT DEFAULT 'scheduled',
+    contact_email TEXT,
+    contact_phone TEXT,
+    external_registration_url TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    created_by TEXT
+  )
+`;
+
+export const CREATE_EVENT_BOOKINGS_TABLE = `
+  CREATE TABLE IF NOT EXISTS event_bookings (
+    id TEXT PRIMARY KEY,
+    event_id TEXT NOT NULL REFERENCES events(id) ON DELETE CASCADE,
+    occurrence_date TEXT,
+    guest_name TEXT NOT NULL,
+    guest_email TEXT NOT NULL,
+    guest_phone TEXT,
+    guest_count INTEGER DEFAULT 1,
+    ticket_tier_id TEXT,
+    amount_usd REAL DEFAULT 0,
+    amount_naira REAL DEFAULT 0,
+    currency TEXT DEFAULT 'NGN',
+    status TEXT DEFAULT 'confirmed',
+    payment_status TEXT DEFAULT 'free',
+    payment_reference TEXT,
+    payment_method TEXT,
+    approved_by TEXT,
+    checked_in_at TEXT,
+    checked_in_by TEXT,
+    special_requests TEXT,
+    source TEXT DEFAULT 'website',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`;
+
+export const CREATE_EVENTS_INDEXES = `
+  CREATE INDEX IF NOT EXISTS idx_events_date_range ON events(start_date, end_date);
+  CREATE INDEX IF NOT EXISTS idx_events_status_published ON events(status, is_published);
+  CREATE INDEX IF NOT EXISTS idx_events_recurring ON events(is_recurring);
+  CREATE INDEX IF NOT EXISTS idx_event_bookings_event ON event_bookings(event_id);
+  CREATE INDEX IF NOT EXISTS idx_event_bookings_date ON event_bookings(occurrence_date);
+`;
+
+export const SEED_EVENTS = `
+  INSERT OR IGNORE INTO events (
+    id, title, slug, description, event_type, category,
+    start_date, end_date, start_time, end_time, timezone,
+    recurrence_rule, recurrence_end_date, recurrence_exceptions, is_recurring,
+    venue_name, venue_description, max_capacity,
+    has_tickets, ticket_tiers, rsvp_limit, booking_opens_at, booking_closes_at, requires_approval,
+    hero_image, gallery, tags,
+    is_featured, is_published, status,
+    contact_email, contact_phone, external_registration_url,
+    created_at, created_by
+  ) VALUES
+  (
+    'evt-1',
+    'New Year''s Eve Gala 2025',
+    'new-years-eve-gala-2025',
+    'Ring in the new year with an unforgettable night of elegance, entertainment, and celebration at the Grand Ballroom.',
+    'gala',
+    'Celebration',
+    '2025-12-31', '2026-01-01', '20:00', '04:00', 'Africa/Lagos',
+    NULL, NULL, '[]', 0,
+    'Grand Ballroom', 'Our flagship event space with crystal chandeliers and marble floors', 300,
+    1, '[{"id":"tier-1","name":"Standard","price_usd":150,"price_naira":240000,"capacity":200,"description":"Access to main ballroom, welcome drink, midnight toast"}]', 200, '2025-10-01 00:00', '2025-12-30 23:59', 0,
+    'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=800&h=600',
+    '["https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=800&h=600","https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=800&h=600"]',
+    '["new-year","gala","black-tie"]',
+    1, 1, 'completed',
+    'events@keoexperience.com', '+234 813 014 8920', NULL,
+    '2025-11-01 10:00:00', 'staff-mgr-1'
+  ),
+  (
+    'evt-2',
+    'Valentine''s Couples Dinner',
+    'valentines-couples-dinner-2026',
+    'An intimate evening of fine dining, live music, and romance in the Courtyard Garden.',
+    'party',
+    'Social',
+    '2026-02-14', '2026-02-14', '19:00', '23:00', 'Africa/Lagos',
+    NULL, NULL, '[]', 0,
+    'Courtyard Garden', 'Intimate outdoor venue surrounded by lush greenery', 80,
+    1, '[{"id":"tier-1","name":"Couple Package","price_usd":200,"price_naira":320000,"capacity":40,"description":"5-course dinner for two, wine pairing, live jazz"}]', 40, '2025-12-01 00:00', '2026-02-13 23:59', 0,
+    'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80&w=800&h=600',
+    '["https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80&w=800&h=600"]',
+    '["valentine","romantic","dinner"]',
+    1, 1, 'completed',
+    'events@keoexperience.com', '+234 813 014 8920', NULL,
+    '2026-01-15 10:00:00', 'staff-mgr-1'
+  ),
+  (
+    'evt-3',
+    'Tech Innovation Conference 2026',
+    'tech-innovation-conference-2026',
+    'Three days of keynotes, workshops, and networking with Africa''s leading tech innovators.',
+    'conference',
+    'Corporate',
+    '2026-03-15', '2026-03-17', '09:00', '17:00', 'Africa/Lagos',
+    NULL, NULL, '[]', 0,
+    'Grand Ballroom', 'Main conference hall with state-of-the-art AV', 250,
+    1, '[{"id":"tier-1","name":"Early Bird","price_usd":300,"price_naira":480000,"capacity":100,"description":"Full 3-day access, meals, conference kit"},{"id":"tier-2","name":"Standard","price_usd":450,"price_naira":720000,"capacity":150,"description":"Full 3-day access, meals, conference kit, networking dinner"}]', 250, '2025-11-01 00:00', '2026-03-10 23:59', 1,
+    'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=800&h=600',
+    '["https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=800&h=600","https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800&h=600"]',
+    '["tech","conference","innovation","networking"]',
+    1, 1, 'scheduled',
+    'events@keoexperience.com', '+234 813 014 8920', NULL,
+    '2025-12-01 10:00:00', 'staff-mgr-1'
+  ),
+  (
+    'evt-4',
+    'Summer Wedding Showcase',
+    'summer-wedding-showcase-2026',
+    'Discover the latest wedding trends, meet top vendors, and tour our stunning venues.',
+    'wedding',
+    'Celebration',
+    '2026-06-20', '2026-06-21', '10:00', '18:00', 'Africa/Lagos',
+    NULL, NULL, '[]', 0,
+    'Grand Ballroom & Courtyard', 'Both indoor and outdoor venues on display', 150,
+    0, '[]', 150, '2026-03-01 00:00', '2026-06-18 23:59', 0,
+    'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800&h=600',
+    '["https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800&h=600"]',
+    '["wedding","showcase","vendors"]',
+    1, 1, 'scheduled',
+    'events@keoexperience.com', '+234 813 014 8920', NULL,
+    '2026-02-01 10:00:00', 'staff-mgr-1'
+  ),
+  (
+    'evt-5',
+    'Friday Night Live',
+    'friday-night-live',
+    'Weekly live music and entertainment every Friday night at the hotel lounge.',
+    'party',
+    'Social',
+    '2026-01-09', '2026-12-25', '20:00', '23:00', 'Africa/Lagos',
+    'FREQ=WEEKLY;INTERVAL=1;BYDAY=FR', '2026-12-25', '["2026-04-10","2026-10-02"]', 1,
+    'Hotel Lounge', 'Cozy lounge with stage and sound system', 100,
+    0, '[]', 100, '2025-12-01 00:00', '2026-12-25 23:59', 0,
+    'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=800&h=600',
+    '["https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=800&h=600"]',
+    '["weekly","live-music","recurring"]',
+    0, 1, 'scheduled',
+    'events@keoexperience.com', '+234 813 014 8920', NULL,
+    '2025-12-01 10:00:00', 'staff-mgr-1'
+  ),
+  (
+    'evt-6',
+    'Monthly Business Networking',
+    'monthly-business-networking',
+    'First Thursday of every month: connect with industry leaders over cocktails.',
+    'corporate',
+    'Corporate',
+    '2026-02-05', '2026-11-05', '18:30', '21:00', 'Africa/Lagos',
+    'FREQ=MONTHLY;INTERVAL=1;BYDAY=1TH', '2026-11-05', '[]', 1,
+    'Executive Boardroom', 'Private boardroom with premium amenities', 50,
+    0, '[]', 50, '2025-12-01 00:00', '2026-11-05 23:59', 0,
+    'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800&h=600',
+    '["https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800&h=600"]',
+    '["networking","business","monthly"]',
+    0, 1, 'scheduled',
+    'events@keoexperience.com', '+234 813 014 8920', NULL,
+    '2025-12-01 10:00:00', 'staff-mgr-1'
   )
 `;
 
