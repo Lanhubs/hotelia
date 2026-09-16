@@ -88,11 +88,67 @@ class RoomRepository {
 
   async fetchAvailableRooms(checkIn: string, checkOut: string): Promise<any[]> {
     const db = getDatabase();
-    const rooms = await db.query<any>(
-      'SELECT * FROM rooms WHERE is_active = true',
-      []
+
+    // If no dates provided, just return all active rooms with full capacity
+    if (!checkIn || !checkOut) {
+      const rooms = await db.query<any>('SELECT * FROM rooms WHERE is_active = true ORDER BY name', []);
+      return rooms.rows.map((row: any) => ({ ...mapRoom(row), availableUnits: row.units || 1 }));
+    }
+
+    // Count active overlapping bookings per room_id for the requested date window.
+    // A booking overlaps when: check_in_date < checkOut AND check_out_date > checkIn
+    const result = await db.query<any>(
+      `SELECT r.*,
+         GREATEST(0, r.units - COALESCE(
+           (SELECT COUNT(*)::int FROM bookings b
+            WHERE b.room_id = r.id
+              AND b.status NOT IN ('Cancelled', 'Checked Out', 'No Show')
+              AND b.check_in_date < $2
+              AND b.check_out_date > $1
+           ), 0
+         )) AS available_units
+       FROM rooms r
+       WHERE r.is_active = true
+       ORDER BY r.name`,
+      [checkIn, checkOut]
     );
-    return rooms.rows.map(mapRoom);
+
+    return result.rows.map((row: any) => ({
+      ...mapRoom(row),
+      availableUnits: Number(row.available_units ?? row.units ?? 1),
+    }));
+  }
+
+  async checkRoomAvailability(slugOrId: string, checkIn: string, checkOut: string): Promise<{ available: boolean; availableUnits: number; roomId: string; roomName: string }> {
+    const db = getDatabase();
+
+    const row = await db.queryOne<any>(
+      `SELECT r.id, r.slug, r.name, r.units,
+         GREATEST(0, r.units - COALESCE(
+           (SELECT COUNT(*)::int FROM bookings b
+            WHERE b.room_id = r.id
+              AND b.status NOT IN ('Cancelled', 'Checked Out', 'No Show')
+              AND b.check_in_date < $3
+              AND b.check_out_date > $2
+           ), 0
+         )) AS available_units
+       FROM rooms r
+       WHERE (r.slug = $1 OR r.id = $1)
+         AND r.is_active = true`,
+      [slugOrId, checkIn, checkOut]
+    );
+
+    if (!row) {
+      return { available: false, availableUnits: 0, roomId: slugOrId, roomName: 'Unknown' };
+    }
+
+    const availableUnits = Number(row.available_units ?? 0);
+    return {
+      available: availableUnits > 0,
+      availableUnits,
+      roomId: row.id,
+      roomName: row.name,
+    };
   }
 
   async createRoom(roomData: any): Promise<any> {
