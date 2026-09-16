@@ -3,6 +3,7 @@ import roomController from '../controllers/roomController'
 import serviceController from '../controllers/serviceController'
 import publicBookingController from '../controllers/publicBookingController'
 import publicPaymentController from '../controllers/publicPaymentController'
+import publicEventController from '../controllers/publicEventController'
 import adminAuthRouter from './admin/auth'
 import adminBookingRouter from './admin/bookings'
 import adminRevenueRouter from './admin/revenue'
@@ -10,6 +11,7 @@ import adminServicesRouter from './admin/services'
 import adminSettingsRouter from './admin/settings'
 import adminDashboardRouter from './admin/dashboard'
 import adminStaffRouter from './admin/staff'
+import adminEventsRouter from './admin/events'
 import notificationRouter from './notifications'
 import { rateLimit } from '../middlewares/rateLimit'
 import uploadController from '../controllers/uploadController'
@@ -24,6 +26,7 @@ router.get('/', (c) =>
 
 // ── Rooms (public) ─────────────────────────────────────────────────────────
 router.get('/rooms', roomController.fetchRooms)
+router.get('/rooms/:slug/availability', roomController.checkRoomAvailability)
 router.get('/rooms/:slug', roomController.fetchRoom)
 router.get('/availability', roomController.fetchAvailability)
 
@@ -35,6 +38,14 @@ router.delete('/rooms/:id', roomController.deleteRoom)
 // ── Services (public) ──────────────────────────────────────────────────────
 router.get('/services', serviceController.getServiceMenu)
 router.get('/services/:slug', serviceController.getService)
+
+// ── Events (public) ────────────────────────────────────────────────────────
+// router.route('/events', publicEventController)
+router.post('/events', publicEventController.createBooking)
+router.delete('/events', publicEventController.cancelBooking)
+router.get('/events', publicEventController.getPastEvents)
+router.get('/events/:slug', publicEventController.getEventBySlug)
+router.get('/events/:reference', publicEventController.getBookingByReference)
 
 // ── Extras (public) ────────────────────────────────────────────────────────
 router.get('/extras', publicBookingController.getExtras)
@@ -68,6 +79,7 @@ router.route('/admin/auth', adminAuthRouter)
 router.route('/admin/bookings', adminBookingRouter)
 router.route('/admin/revenue', adminRevenueRouter)
 router.route('/admin/services', adminServicesRouter)
+router.route('/admin/events', adminEventsRouter)
 router.route('/admin/settings', adminSettingsRouter)
 router.route('/admin/dashboard', adminDashboardRouter)
 router.route('/admin/staff', adminStaffRouter)
