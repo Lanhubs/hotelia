@@ -11,12 +11,20 @@ import { ServiceOperationsBoard } from '../components/services/ServiceOperations
 import { ServiceMenuCatalog } from '../components/services/ServiceMenuCatalog';
 import { ServiceLedger } from '../components/services/ServiceLedger';
 import { CreateServiceOrderModal } from '../components/services/CreateServiceOrderModal';
+import { CreateMenuItemModal } from '../components/services/CreateMenuItemModal';
 import { ServiceOrderDrawer } from '../components/services/ServiceOrderDrawer';
 import { formatMoney } from '../components/bookings/bookingUtils';
 
 export const ServicesPage: React.FC = () => {
   const { displayCurrency, setDisplayCurrency } = useBookingStore();
-  const { orders: apiOrders, isLoadingOrders } = useServicesApi();
+  const {
+    orders: apiOrders,
+    menu: apiMenu,
+    isLoadingOrders,
+    createMenuItem,
+    updateMenuItem,
+    deleteMenuItem,
+  } = useServicesApi();
   const { orders, setOrders, createOrder, advanceOrderStatus } = useServiceOrderStore();
 
   useEffect(() => {
@@ -32,6 +40,9 @@ export const ServicesPage: React.FC = () => {
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [selectedOrderDetails, setSelectedOrderDetails] = useState<ServiceOrder | null>(null);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
+
+  const [isMenuItemModalOpen, setIsMenuItemModalOpen] = useState(false);
+  const [editingMenuItem, setEditingMenuItem] = useState<ServiceMenuItem | null>(null);
 
   const [orderGuestRoom, setOrderGuestRoom] = useState('301');
   const [orderGuestName, setOrderGuestName] = useState('Alexander Hayes');
@@ -101,6 +112,31 @@ export const ServicesPage: React.FC = () => {
     setTimeout(() => setToastMsg(null), 4500);
   };
 
+  const handleMenuItemSubmit = async (data: any) => {
+    if (data.id) {
+      await updateMenuItem(data);
+      setToastMsg(`Menu item "${data.name}" updated successfully.`);
+    } else {
+      await createMenuItem(data);
+      setToastMsg(`Meal "${data.name}" uploaded to the menu.`);
+    }
+    setTimeout(() => setToastMsg(null), 4000);
+  };
+
+  const handleDeleteMenuItem = (item: ServiceMenuItem) => {
+    const confirmed = window.confirm(`Delete "${item.name}" from the menu? This cannot be undone.`);
+    if (!confirmed) return;
+    deleteMenuItem(item.id)
+      .then(() => {
+        setToastMsg(`"${item.name}" removed from the menu.`);
+        setTimeout(() => setToastMsg(null), 4000);
+      })
+      .catch(() => {
+        setToastMsg('Failed to delete menu item.');
+        setTimeout(() => setToastMsg(null), 4000);
+      });
+  };
+
   const filteredOrders = orders.filter((ord) => {
     if (selectedDepartment !== 'all') {
       if (selectedDepartment === 'culinary' && ord.department !== 'Culinary') return false;
@@ -115,7 +151,9 @@ export const ServicesPage: React.FC = () => {
     return true;
   });
 
-  const filteredMenuItems = SERVICE_MENU_CATALOG.filter((item) => {
+  const menuItems = apiMenu && apiMenu.length > 0 ? apiMenu : SERVICE_MENU_CATALOG;
+
+  const filteredMenuItems = menuItems.filter((item) => {
     if (selectedDepartment !== 'all') {
       if (selectedDepartment === 'culinary' && item.category !== 'fnb') return false;
       if (selectedDepartment === 'catering' && item.category !== 'catering') return false;
@@ -145,11 +183,35 @@ export const ServicesPage: React.FC = () => {
       <ServiceToast message={toastMsg} onDismiss={() => setToastMsg(null)} />
       <ServicesPageHeader displayCurrency={displayCurrency} onToggleCurrency={() => setDisplayCurrency(displayCurrency === 'USD' ? 'NGN' : 'USD')} onCreateOrder={() => handleOpenNewOrderModal()} />
       <ServiceMetricsStrip displayCurrency={displayCurrency} activeOrdersCount={activeOrdersCount} inKitchenCount={inKitchenCount} revenue={totalRevenueUSD} />
-      <ServiceControlBar searchQuery={searchQuery} onSearchChange={setSearchQuery} activeTab={activeTab} onTabChange={setActiveTab} menuCount={SERVICE_MENU_CATALOG.length} ordersCount={orders.length} selectedDepartment={selectedDepartment} onDepartmentChange={setSelectedDepartment} filteredCount={filteredOrders.length} />
+      <ServiceControlBar searchQuery={searchQuery} onSearchChange={setSearchQuery} activeTab={activeTab} onTabChange={setActiveTab} menuCount={menuItems.length} ordersCount={orders.length} selectedDepartment={selectedDepartment} onDepartmentChange={setSelectedDepartment} filteredCount={filteredOrders.length} />
 
       {activeTab === 'board' && <ServiceOperationsBoard orders={filteredOrders} displayCurrency={displayCurrency} onOpenOrder={setSelectedOrderDetails} onAdvanceStatus={handleAdvanceStatus} />}
-      {activeTab === 'menu' && <ServiceMenuCatalog items={filteredMenuItems} displayCurrency={displayCurrency} onOrderItem={handleOpenNewOrderModal} />}
+      {activeTab === 'menu' && (
+        <ServiceMenuCatalog
+          items={filteredMenuItems}
+          displayCurrency={displayCurrency}
+          onOrderItem={handleOpenNewOrderModal}
+          onAddItem={() => {
+            setEditingMenuItem(null);
+            setIsMenuItemModalOpen(true);
+          }}
+          onEditItem={(item) => {
+            setEditingMenuItem(item);
+            setIsMenuItemModalOpen(true);
+          }}
+          onDeleteItem={handleDeleteMenuItem}
+        />
+      )}
       {activeTab === 'ledger' && <ServiceLedger orders={filteredOrders} displayCurrency={displayCurrency} totalRevenue={totalRevenueUSD} onOpenOrder={setSelectedOrderDetails} />}
+
+      {isMenuItemModalOpen && (
+        <CreateMenuItemModal
+          editingItem={editingMenuItem}
+          displayCurrency={displayCurrency}
+          onClose={() => setIsMenuItemModalOpen(false)}
+          onSubmit={handleMenuItemSubmit}
+        />
+      )}
 
       {isOrderModalOpen && (
         <CreateServiceOrderModal
