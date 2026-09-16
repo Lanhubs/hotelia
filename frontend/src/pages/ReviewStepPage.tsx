@@ -1,16 +1,29 @@
 import { Seo } from '../components/seo/Seo'
 import { CheckoutLayout } from '../components/booking/CheckoutLayout'
 import { useCheckoutStore } from '../stores/checkoutStore'
-import { ButtonLink } from '../components/shared/Button'
+import { ButtonLink, Button } from '../components/shared/Button'
 import { formatDateRange, nightsBetween } from '../lib/dates'
 import { formatNaira } from '../lib/money'
 import { computeFinancials } from '../lib/financials'
+import { useRoomAvailability } from '../hooks/useRoomAvailability'
+import { FaTriangleExclamation, FaArrowRight } from 'react-icons/fa6'
+import { useNavigate } from 'react-router-dom'
 
 export function ReviewStepPage() {
+  const navigate = useNavigate()
   const room = useCheckoutStore((s) => s.room)
   const search = useCheckoutStore((s) => s.search)
 
+  // Re-check availability right here before the guest can continue to payment
+  const { available, availableUnits, isChecking } = useRoomAvailability({
+    slug: room?.slug ?? '',
+    checkIn: search?.checkIn ?? '',
+    checkOut: search?.checkOut ?? '',
+    refetchInterval: 20_000, // tighter poll on the review step
+  })
+
   if (!room || !search) return null
+
   const nights = nightsBetween(search.checkIn, search.checkOut)
   const fin = computeFinancials(room, search, [])
 
@@ -38,6 +51,45 @@ export function ReviewStepPage() {
                 </ButtonLink>
               </div>
             </div>
+
+            {/* ── Live availability status ── */}
+            {isChecking ? (
+              <div className="flex items-center gap-2 rounded-sm border border-hairline bg-paper-soft px-4 py-3 text-xs text-ink-mute">
+                <span className="h-3 w-3 animate-spin rounded-full border border-ink-mute border-t-transparent" />
+                Verifying room availability…
+              </div>
+            ) : !available ? (
+              <div className="rounded-sm border border-amber-300 bg-amber-50 px-4 py-4" role="alert">
+                <div className="flex items-start gap-3">
+                  <FaTriangleExclamation className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
+                  <div>
+                    <p className="font-semibold text-amber-800">Room no longer available</p>
+                    <p className="mt-1 text-sm text-amber-700">
+                      All units for <strong>{room.name}</strong> have been booked for your selected dates.
+                      Please choose different dates or select another room.
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-3">
+                      <ButtonLink to="/availability" variant="outline" size="sm">
+                        Change dates
+                      </ButtonLink>
+                      <ButtonLink to="/rooms" size="sm">
+                        Browse rooms <FaArrowRight className="ml-1 h-3 w-3" />
+                      </ButtonLink>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : availableUnits <= 3 ? (
+              <div className="flex items-center gap-2 rounded-sm border border-amber-200 bg-amber-50 px-4 py-2.5 text-xs font-medium text-amber-800">
+                <span className="h-2 w-2 rounded-full bg-amber-500" />
+                Only {availableUnits} unit{availableUnits > 1 ? 's' : ''} left — don't wait too long!
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 rounded-sm border border-green-200 bg-green-50 px-4 py-2.5 text-xs font-medium text-green-800">
+                <span className="h-2 w-2 rounded-full bg-green-500" />
+                Room is available for your dates
+              </div>
+            )}
 
             <dl className="space-y-3 text-sm">
               <div className="flex justify-between gap-4">
@@ -74,7 +126,13 @@ export function ReviewStepPage() {
               <ButtonLink to="/availability" variant="outline">
                 Change dates
               </ButtonLink>
-              <ButtonLink to="/booking/guest">Continue</ButtonLink>
+              {available ? (
+                <ButtonLink to="/booking/guest">Continue</ButtonLink>
+              ) : (
+                <Button disabled aria-disabled="true">
+                  Room unavailable
+                </Button>
+              )}
             </div>
           </div>
         </div>
