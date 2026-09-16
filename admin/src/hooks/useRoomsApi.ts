@@ -47,3 +47,22 @@ export function useRoomDetailApi(slug: string) {
     enabled: !!slug,
   });
 }
+
+/** Polls room availability every 20 s while the walk-in form is open. */
+export function useRoomAvailabilityApi(
+  slugOrId: string,
+  checkIn: string,
+  checkOut: string
+) {
+  const enabled = Boolean(slugOrId && checkIn && checkOut);
+  return useQuery<{ available: boolean; availableUnits: number; roomId: string; roomName: string }>({
+    queryKey: ['room-availability', slugOrId, checkIn, checkOut],
+    queryFn: () =>
+      Api.get(`/rooms/${encodeURIComponent(slugOrId)}/availability?checkIn=${encodeURIComponent(checkIn)}&checkOut=${encodeURIComponent(checkOut)}`),
+    enabled,
+    refetchInterval: 20_000,
+    refetchIntervalInBackground: false,
+    staleTime: 0,
+    retry: 1,
+  });
+}
