@@ -79,7 +79,7 @@ export const DashboardCalendar: React.FC<DashboardCalendarProps> = ({ calendarDa
         {calendarDays.map((day) => (
           <div key={`${day.dateNum}-${day.dayName}`} className="flex items-center gap-3">
             {/* Date Column */}
-            <div className="w-7 text-center flex-shrink-0">
+            <div className="w-7 text-center shrink-0">
               <div className="text-xs font-bold text-zinc-900 leading-none">{day.dateNum}</div>
               <div className="text-[10px] text-zinc-400 font-medium">{day.dayName}</div>
             </div>
