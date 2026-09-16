@@ -12,6 +12,7 @@ import {
   Compass,
   CalendarCheck2,
   Calendar,
+  CalendarDays,
 } from 'lucide-react';
 
 interface NavIconProps {
@@ -37,6 +38,8 @@ export const NavIcon: React.FC<NavIconProps> = ({ name, className = 'w-4 h-4' })
     case 'catering':
     case 'services':
       return <UtensilsCrossed className={className} />;
+    case 'events':
+      return <CalendarDays className={className} />;
     case 'reports':
     case 'analytic':
     case 'revenue':
