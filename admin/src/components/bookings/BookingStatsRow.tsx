@@ -35,9 +35,9 @@ export const BookingStatsRow: React.FC<BookingStatsRowProps> = ({
 
   const checkedInCount = bookings.filter((b) => b.status === 'Checked In').length;
   const confirmedCount = bookings.filter((b) => b.status === 'Confirmed').length;
-  const activeKeysCount = bookings.filter((b) => b.keycard.status === 'Active').length;
+  const activeKeysCount = bookings.filter((b) => b.keycard?.status === 'Active').length;
 
-  const totalRevenueUSD = bookings.reduce((sum, b) => sum + b.financials.totalAmount, 0);
+  const totalRevenueUSD = bookings.reduce((sum, b) => sum + b.financials?.totalAmount, 0);
   const walkinRevenueUSD = bookings
     .filter((b) => b.channel === 'front_desk_walkin')
     .reduce((sum, b) => sum + b.financials.totalAmount, 0);
