@@ -1,6 +1,8 @@
 export const queryKeys = {
   rooms: ['rooms'] as const,
   room: (slug: string) => ['rooms', slug] as const,
+  roomAvailability: (slug: string, checkIn: string, checkOut: string) =>
+    ['rooms', slug, 'availability', checkIn, checkOut] as const,
   availability: (params: string) => ['availability', params] as const,
   services: ['services'] as const,
   service: (slug: string) => ['services', slug] as const,
