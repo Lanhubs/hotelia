@@ -12,7 +12,7 @@ export const Sidebar: React.FC = () => {
     <aside
       id="app-sidebar"
       aria-label="KEO Operations Sidebar"
-      className={`hidden md:flex flex-col flex-shrink-0 h-screen sticky top-0 bg-white text-zinc-700 border-r border-zinc-200/80 select-none z-30 transition-[width] duration-200 ease-in-out ${
+      className={`hidden md:flex flex-col shrink-0 h-screen sticky top-0 bg-white text-zinc-700 border-r border-zinc-200/80 select-none z-30 transition-[width] duration-200 ease-in-out ${
         isCollapsed ? 'w-[72px]' : 'w-[220px]'
       }`}
     >
