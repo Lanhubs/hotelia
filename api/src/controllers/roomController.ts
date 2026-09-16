@@ -16,6 +16,19 @@ class RoomController {
     return c.json(room)
   }
 
+  async checkRoomAvailability(c: Context): Promise<Response> {
+    const slug = c.req.param("slug") as string
+    const checkIn = c.req.query("checkIn") as string
+    const checkOut = c.req.query("checkOut") as string
+
+    if (!checkIn || !checkOut) {
+      return c.json({ error: "checkIn and checkOut query params are required" }, 400)
+    }
+
+    const result = await roomService.checkRoomAvailability(slug, checkIn, checkOut)
+    return c.json(result)
+  }
+
   async fetchAvailability(c: Context): Promise<Response> {
     const checkIn = c.req.query("checkIn") as string
     const checkOut = c.req.query("checkOut") as string
