@@ -131,7 +131,7 @@ export const BookingsHubPage: React.FC = () => {
         <BookingDetailDrawer booking={selectedBooking} onClose={closeBookingDetails} displayCurrency={displayCurrency} />
       )}
 
-      {isWalkInModalOpen && LUXURY_ROOMS[0] && (
+      {isWalkInModalOpen && /* LUXURY_ROOMS[0] && */ (
         <WalkInBookingModal
           room={LUXURY_ROOMS[0]}
           checkInDate="18/08/2026"
