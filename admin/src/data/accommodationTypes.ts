@@ -35,7 +35,7 @@ export interface AccommodationRoom {
   locationDetails?: any;
   mealsIncluded: string[];
   facilities?: string[];
-  roomNumbers: string[];
+  roomNumbers?: string[];
   floor: number;
   squareMeters: number;
   isWalkInReady: boolean;
