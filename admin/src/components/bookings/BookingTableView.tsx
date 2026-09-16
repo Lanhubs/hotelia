@@ -65,7 +65,7 @@ export const BookingTableView: React.FC<BookingTableViewProps> = ({
 
             {/* Data Rows */}
             <div className="divide-y divide-zinc-100">
-              {bookings.map((b) => (
+              {bookings?.map((b) => (
                 <div
                   key={b.id}
                   onClick={() => onOpenDetails(b)}
@@ -81,18 +81,18 @@ export const BookingTableView: React.FC<BookingTableViewProps> = ({
                   <div className="py-3.5 px-4">
                     <div className="flex items-center gap-2.5">
                       <img
-                        src={b.guest.avatar}
-                        alt={b.guest.name}
+                        src={b.guest?.avatar}
+                        alt={b.guest?.name}
                         className="w-8 h-8 rounded-full object-cover ring-1 ring-zinc-200 shrink-0"
                       />
                       <div>
                         <div className="font-bold text-zinc-900 group-hover:text-ink transition-colors">
-                          {b.guest.name}
+                          {b.guest?.name}
                         </div>
                         <div className="text-[10px] text-zinc-400 flex items-center gap-1">
-                          <span className="font-semibold text-indigo-600">{b.guest.vipTier} VIP</span>
+                          <span className="font-semibold text-indigo-600">{b.guest?.vipTier} VIP</span>
                           <span>•</span>
-                          <span>{b.guest.nationality}</span>
+                          <span>{b.guest?.nationality}</span>
                         </div>
                       </div>
                     </div>
@@ -106,37 +106,37 @@ export const BookingTableView: React.FC<BookingTableViewProps> = ({
                   {/* Room & Number */}
                   <div className="py-3.5 px-4">
                     <div className="font-bold text-zinc-800 truncate max-w-[160px]">
-                      {b.room.name}
+                      {b.room?.name}
                     </div>
                     <div className="text-[11px] font-semibold text-ink">
-                      Room #{b.room.roomNumber} (Fl {b.room.floor})
+                      Room #{b.room?.roomNumber} (Fl {b.room?.floor})
                     </div>
                   </div>
 
                   {/* Stay Dates */}
                   <div className="py-3.5 px-4">
                     <div className="font-semibold text-zinc-800">
-                      {b.stay.checkInDate} → {b.stay.checkOutDate}
+                      {b.stay?.checkInDate} → {b.stay?.checkOutDate}
                     </div>
                     <div className="text-[10px] text-zinc-400">
-                      {b.stay.nights} Nights • {b.stay.adults} Guests
+                      {b.stay?.nights} Nights • {b.stay?.adults} Guests
                     </div>
                   </div>
 
                   {/* Status */}
                   <div className="py-3.5 px-4">
-                    {getStatusBadge(b.status)}
+                    {getStatusBadge(b?.status)}
                   </div>
 
                   {/* Total / Balance */}
                   <div className="py-3.5 px-4">
                     <div className="font-black text-zinc-900">
-                      {formatMoney(b.financials.totalAmount, displayCurrency)}
+                      {formatMoney(b.financials?.totalAmount, displayCurrency)}
                     </div>
                     <div className="text-[10px]">
-                      {b.financials.balanceDue > 0 ? (
+                      {b.financials?.balanceDue > 0 ? (
                         <span className="text-red-600 font-bold">
-                          Due: {formatMoney(b.financials.balanceDue, displayCurrency)}
+                          Due: {formatMoney(b.financials?.balanceDue, displayCurrency)}
                         </span>
                       ) : (
                         <span className="text-emerald-600 font-medium">Settled</span>
@@ -148,13 +148,13 @@ export const BookingTableView: React.FC<BookingTableViewProps> = ({
                   <div className="py-3.5 px-4">
                     <span
                       className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold ${
-                        b.keycard.status === 'Active'
+                        b.keycard?.status === 'Active'
                           ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                           : 'bg-zinc-100 text-zinc-500'
                       }`}
                     >
                       <KeyRound className="w-3 h-3" />
-                      <span>{b.keycard.status}</span>
+                      <span>{b.keycard?.status}</span>
                     </span>
                   </div>
 
