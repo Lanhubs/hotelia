@@ -35,6 +35,12 @@ export const NAVIGATION_SECTIONS: NavigationSection[] = [
         path: '/services',
         icon: 'catering',
       },
+      {
+        id: 'events',
+        label: 'Events & Parties',
+        path: '/events',
+        icon: 'events',
+      },
     ],
   },
   {
