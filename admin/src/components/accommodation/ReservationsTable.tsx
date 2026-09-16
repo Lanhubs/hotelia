@@ -51,7 +51,7 @@ export const ReservationsTable: React.FC<ReservationsTableProps> = ({
             className="px-3.5 py-1.5 bg-ink text-white rounded-lg text-xs font-semibold hover:bg-[#4338CA] shadow-xs cursor-pointer flex items-center gap-1.5"
           >
             <KeyRound className="w-3.5 h-3.5" />
-            <span>+ Create Walk-In Booking</span>
+            <span>Create Walk-In Booking</span>
           </button>
         </div>
       </div>
@@ -60,14 +60,14 @@ export const ReservationsTable: React.FC<ReservationsTableProps> = ({
       <div className="overflow-x-auto">
         {/* Table Header Row */}
         <div className="flex items-center bg-[#FAFBFD] text-zinc-400 border-b border-zinc-100 uppercase text-[10px] font-bold tracking-wider">
-          <div className="py-3 px-4 w-[120px] flex-shrink-0">Folio Code</div>
-          <div className="py-3 px-4 w-[180px] flex-shrink-0">Guest Name</div>
-          <div className="py-3 px-4 w-[140px] flex-shrink-0">Channel Origin</div>
-          <div className="py-3 px-4 w-[160px] flex-shrink-0">Suite / Room</div>
-          <div className="py-3 px-4 w-[150px] flex-shrink-0">Stay Dates</div>
-          <div className="py-3 px-4 w-[120px] flex-shrink-0">Status</div>
-          <div className="py-3 px-4 w-[120px] flex-shrink-0">Total Amount</div>
-          <div className="py-3 px-4 w-[100px] flex-shrink-0 text-right">Actions</div>
+          <div className="py-3 px-4 w-[120px] shrink-0">Folio Code</div>
+          <div className="py-3 px-4 w-[180px] shrink-0">Guest Name</div>
+          <div className="py-3 px-4 w-[140px] shrink-0">Channel Origin</div>
+          <div className="py-3 px-4 w-[160px] shrink-0">Suite / Room</div>
+          <div className="py-3 px-4 w-[150px] shrink-0">Stay Dates</div>
+          <div className="py-3 px-4 w-[120px] shrink-0">Status</div>
+          <div className="py-3 px-4 w-[120px] shrink-0">Total Amount</div>
+          <div className="py-3 px-4 w-[100px] shrink-0 text-right">Actions</div>
         </div>
 
         {/* Table Body - Rows */}
@@ -79,13 +79,13 @@ export const ReservationsTable: React.FC<ReservationsTableProps> = ({
               className="flex items-center hover:bg-zinc-50/70 transition-colors cursor-pointer group"
             >
               {/* Folio Code Column */}
-              <div className="py-3.5 px-4 w-[120px] flex-shrink-0 font-mono font-bold text-zinc-900">
+              <div className="py-3.5 px-4 w-[120px] shrink-0 font-mono font-bold text-zinc-900">
                 <span className="text-ink">{res.id}</span>
                 <div className="text-[10px] text-zinc-400 font-normal">{res.folioNumber}</div>
               </div>
 
               {/* Guest Name Column */}
-              <div className="py-3.5 px-4 w-[180px] flex-shrink-0">
+              <div className="py-3.5 px-4 w-[180px] shrink-0">
                 <div className="flex items-center gap-2">
                   <img
                     src={res.guest.avatar}
@@ -102,7 +102,7 @@ export const ReservationsTable: React.FC<ReservationsTableProps> = ({
               </div>
 
               {/* Channel Origin Column */}
-              <div className="py-3.5 px-4 w-[140px] flex-shrink-0">
+              <div className="py-3.5 px-4 w-[140px] shrink-0">
                 <span
                   className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${
                     res.channelCategory === 'offline'
@@ -120,13 +120,13 @@ export const ReservationsTable: React.FC<ReservationsTableProps> = ({
               </div>
 
               {/* Suite / Room Column */}
-              <div className="py-3.5 px-4 w-[160px] flex-shrink-0">
+              <div className="py-3.5 px-4 w-[160px] shrink-0">
                 <span className="font-semibold text-zinc-800">{res.room.name}</span>
                 <div className="text-[11px] text-ink font-semibold">Room #{res.room.roomNumber}</div>
               </div>
 
               {/* Stay Dates Column */}
-              <div className="py-3.5 px-4 w-[150px] flex-shrink-0">
+              <div className="py-3.5 px-4 w-[150px] shrink-0">
                 <div className="flex items-center gap-1.5 text-zinc-700 font-medium">
                   <Calendar className="w-3.5 h-3.5 text-zinc-400" />
                   <span>{res.stay.checkInDate} → {res.stay.checkOutDate}</span>
@@ -135,7 +135,7 @@ export const ReservationsTable: React.FC<ReservationsTableProps> = ({
               </div>
 
               {/* Status Column */}
-              <div className="py-3.5 px-4 w-[120px] flex-shrink-0">
+              <div className="py-3.5 px-4 w-[120px] shrink-0">
                 <span
                   className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold ${
                     res.status === 'Checked In'
@@ -151,14 +151,14 @@ export const ReservationsTable: React.FC<ReservationsTableProps> = ({
               </div>
 
               {/* Total Amount Column */}
-              <div className="py-3.5 px-4 w-[120px] flex-shrink-0 font-bold text-zinc-900">
+              <div className="py-3.5 px-4 w-[120px] shrink-0 font-bold text-zinc-900">
                 {displayCurrency === 'USD'
                   ? `$${res.financials.totalAmount.toLocaleString()}`
                   : `₦${(res.financials.totalAmount * 1600).toLocaleString()}`}
               </div>
 
               {/* Actions Column */}
-              <div className="py-3.5 px-4 w-[100px] flex-shrink-0 text-right">
+              <div className="py-3.5 px-4 w-[100px] shrink-0 text-right">
                 <button
                   type="button"
                   onClick={(e) => {
