@@ -25,7 +25,7 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({
     >
       <div className="flex items-center gap-2.5 overflow-hidden">
         {/* KEO Experience Logo */}
-        <div className="flex-shrink-0 flex items-center justify-center">
+        <div className="shrink-0 flex items-center justify-center">
           <img
             src={keoLogo}
             alt="KEO Experience"
