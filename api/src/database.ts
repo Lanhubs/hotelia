@@ -4,6 +4,7 @@ import { createSqliteDatabase } from './sqliteAdapter';
 import {
   CREATE_ROOMS_TABLE,
   CREATE_BOOKINGS_TABLE,
+  CREATE_SERVICE_MENU_TABLE,
   CREATE_SERVICE_ORDERS_TABLE,
   CREATE_STAFF_USERS_TABLE,
   CREATE_SETTINGS_TABLE,
@@ -12,6 +13,11 @@ import {
   CREATE_IDEMPOTENCY_TABLE,
   CREATE_NOTIFICATIONS_TABLE,
   SEED_EXTRAS,
+  SEED_SERVICE_MENU,
+  CREATE_EVENTS_TABLE,
+  CREATE_EVENT_BOOKINGS_TABLE,
+  CREATE_EVENTS_INDEXES,
+  SEED_EVENTS,
 } from './dbSchema';
 
 export interface Database {
@@ -209,6 +215,7 @@ export async function initDatabase() {
     const db = getDatabase();
     await db.query(CREATE_ROOMS_TABLE);
     await db.query(CREATE_BOOKINGS_TABLE);
+    await db.query(CREATE_SERVICE_MENU_TABLE);
     await db.query(CREATE_SERVICE_ORDERS_TABLE);
     await db.query(CREATE_STAFF_USERS_TABLE);
     await db.query(CREATE_SETTINGS_TABLE);
@@ -216,6 +223,9 @@ export async function initDatabase() {
     await db.query(CREATE_EXTRAS_TABLE);
     await db.query(CREATE_IDEMPOTENCY_TABLE);
     await db.query(CREATE_NOTIFICATIONS_TABLE);
+    await db.query(CREATE_EVENTS_TABLE);
+    await db.query(CREATE_EVENT_BOOKINGS_TABLE);
+    await db.query(CREATE_EVENTS_INDEXES);
     
     // Migration: Add room_numbers column if it doesn't exist
     try {
@@ -229,6 +239,8 @@ export async function initDatabase() {
     await seedStaffUsers(db);
     await seedDefaultRooms(db);
     await db.query(SEED_EXTRAS);
+    await db.query(SEED_SERVICE_MENU);
+    await db.query(SEED_EVENTS);
     console.log('Database schema and seed data initialized successfully.');
   } catch (error) {
     console.warn('Database initialization warning:', error);
