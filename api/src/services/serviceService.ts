@@ -10,6 +10,18 @@ class ServiceService {
     return await serviceRepository.fetchServiceBySlug(slug)
   }
 
+  async createMenuItem(data: any): Promise<ServiceMenu | null> {
+    return await serviceRepository.createServiceMenuItem(data)
+  }
+
+  async updateMenuItem(id: string, data: any): Promise<ServiceMenu | null> {
+    return await serviceRepository.updateServiceMenuItem(id, data)
+  }
+
+  async deleteMenuItem(id: string): Promise<boolean> {
+    return await serviceRepository.deleteServiceMenuItem(id)
+  }
+
   async createServiceOrder(data: any): Promise<ServiceOrder | null> {
     return await serviceRepository.createServiceOrder(data)
   }
