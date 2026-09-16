@@ -91,7 +91,7 @@ export const RoomStatusDonut: React.FC<RoomStatusDonutProps> = ({ statusItems })
           <div key={item.label} className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span
-                className="w-2.5 h-2.5 rounded-sm flex-shrink-0"
+                className="w-2.5 h-2.5 rounded-sm shrink-0"
                 style={{ backgroundColor: item.color }}
               />
               <span className="text-zinc-600 text-xs font-normal">{item.label}</span>
