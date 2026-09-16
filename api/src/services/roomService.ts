@@ -10,6 +10,10 @@ class RoomService {
     return await roomRepository.fetchRoom(slug)
   }
 
+  async checkRoomAvailability(slugOrId: string, checkIn: string, checkOut: string) {
+    return await roomRepository.checkRoomAvailability(slugOrId, checkIn, checkOut)
+  }
+
   async fetchAvailability(checkIn: string, checkOut: string, adults: number, children: number, rooms: number): Promise<any[]> {
     const roomList = await roomRepository.fetchAvailableRooms(checkIn, checkOut)
     
