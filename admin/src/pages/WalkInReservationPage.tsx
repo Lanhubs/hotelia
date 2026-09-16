@@ -10,8 +10,7 @@ import { PaymentSection, WalkInPaymentMethod } from '../components/walkin/Paymen
 import { WalkInFolioInvoice } from '../components/walkin/WalkInFolioInvoice';
 import { WalkInConfirmation } from '../components/walkin/WalkInConfirmation';
 import { createWalkInFolioRecord } from '../utils/bookingUtils';
-
-import { useRoomDetailApi, useRoomsApi } from '../hooks/useRoomsApi';
+import { useRoomDetailApi, useRoomsApi, useRoomAvailabilityApi } from '../hooks/useRoomsApi';
 
 export const WalkInReservationPage: React.FC = () => {
   const { roomId } = useParams<{ roomId: string }>();
@@ -59,6 +58,16 @@ export const WalkInReservationPage: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [confirmedBooking, setConfirmedBooking] = useState<any | null>(null);
 
+  // 🔄 Real-time availability — polls every 20 s while the form is open
+  const availabilityQuery = useRoomAvailabilityApi(
+    currentRoom?.slug || currentRoom?.id || roomId || '',
+    checkInDate,
+    checkOutDate
+  );
+  const roomAvailable = availabilityQuery.data?.available ?? true; // optimistic until checked
+  const availableUnits = availabilityQuery.data?.availableUnits ?? (currentRoom?.units ?? 1);
+  const isCheckingAvailability = availabilityQuery.isLoading;
+
   // Update selected room number when currentRoom changes
   useEffect(() => {
     if (currentRoom?.roomNumbers && currentRoom.roomNumbers.length > 0) {
@@ -102,6 +111,42 @@ export const WalkInReservationPage: React.FC = () => {
     <div className="space-y-6 pb-16">
       <WalkInPageHeader room={currentRoom} />
 
+      {/* ── Real-time availability alert ── */}
+      {!confirmedBooking && (
+        <div>
+          {isCheckingAvailability ? (
+            <div className="flex items-center gap-2 rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-xs text-zinc-500">
+              <span className="h-3 w-3 animate-spin rounded-full border border-zinc-400 border-t-transparent" />
+              Checking real-time room availability…
+            </div>
+          ) : !roomAvailable ? (
+            <div className="rounded-xl border border-red-300 bg-red-50 px-5 py-4" role="alert">
+              <div className="flex items-start gap-3">
+                <span className="mt-0.5 text-lg">🚨</span>
+                <div>
+                  <p className="text-sm font-bold text-red-800">ROOM OCCUPIED — Cannot Process Walk-In</p>
+                  <p className="mt-1 text-xs text-red-700">
+                    All units for <strong>{currentRoom?.name}</strong> are booked for{' '}
+                    <strong>{checkInDate}</strong> → <strong>{checkOutDate}</strong>.
+                    Adjust the check-in/check-out dates or select a different room.
+                  </p>
+                </div>
+              </div>
+            </div>
+          ) : availableUnits <= 3 ? (
+            <div className="flex items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs font-medium text-amber-800">
+              <span className="h-2 w-2 rounded-full bg-amber-500" />
+              Only {availableUnits} unit{availableUnits > 1 ? 's' : ''} available for these dates — proceed promptly.
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-xs font-medium text-emerald-800">
+              <span className="h-2 w-2 rounded-full bg-emerald-500" />
+              {availableUnits} unit{availableUnits > 1 ? 's' : ''} available · Room is ready for walk-in
+            </div>
+          )}
+        </div>
+      )}
+
       {!confirmedBooking ? (
         <form onSubmit={handleProcessWalkIn} className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
           <div className="lg:col-span-8 space-y-5">
@@ -144,7 +189,7 @@ export const WalkInReservationPage: React.FC = () => {
             addOnsUSD={addOnsUSD} addOnsNGN={addOnsNGN} serviceTaxUSD={serviceTaxUSD}
             serviceTaxNGN={serviceTaxNGN} totalPayableUSD={totalPayableUSD} totalPayableNGN={totalPayableNGN}
             includeAirportTransfer={includeAirportTransfer} includeLateCheckout={includeLateCheckout}
-            isProcessing={isProcessing}
+            isProcessing={isProcessing || !roomAvailable}
           />
         </form>
       ) : (
