@@ -44,7 +44,7 @@ export const SidebarUser: React.FC<SidebarUserProps> = ({ isCollapsed }) => {
               title="Click to switch role or view profile"
             >
               {/* Avatar */}
-              <div className="relative flex-shrink-0">
+              <div className="relative shrink-0">
                 <img
                   src={currentUser.avatarUrl || null as any}
                   alt={currentUser.name}
