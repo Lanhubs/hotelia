@@ -19,6 +19,7 @@ import { ActivityPage } from './pages/ActivityPage';
 import { HelpSupportPage } from './pages/HelpSupportPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { ConfigPage } from './pages/ConfigPage';
+import { EventsPage } from './pages/EventsPage';
 
 import GlobalToastContainer from './components/common/GlobalToastContainer';
 import { AdminPageLoader } from './components/common/AdminPageLoader';
@@ -88,6 +89,7 @@ export default function App() {
           <Route path="front-desk" element={<FrontDeskPage />} />
           <Route path="catering" element={<ServicesPage />} />
           <Route path="services" element={<ServicesPage />} />
+          <Route path="events" element={<EventsPage />} />
           <Route path="reports" element={<RevenuePage />} />
           <Route path="revenue" element={<RevenuePage />} />
           <Route path="accounting" element={<TransactionsPage />} />
