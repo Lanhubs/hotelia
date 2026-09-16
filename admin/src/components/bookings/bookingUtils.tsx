@@ -13,7 +13,7 @@ import { BookingStatus } from '../../types/booking';
 
 export type DisplayCurrency = 'USD' | 'NGN';
 
-export const formatMoney = (amountUSD: number, currency: DisplayCurrency) => {
+export const formatMoney = (amountUSD: number, currency: DisplayCurrency ) => {
   if (currency === 'NGN') {
     return `₦${(amountUSD * 1600).toLocaleString()}`;
   }
